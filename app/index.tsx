@@ -1,15 +1,9 @@
+import { useState } from "react";
 import { Text, View } from "react-native";
+// import { UseNetInfo } from "@react-native-community/netinfo"
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Czas na kodzenie właściwe</Text>
-    </View>
+    <Text>I hate life</Text>
   );
 }
