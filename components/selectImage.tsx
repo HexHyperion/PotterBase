@@ -1,23 +1,25 @@
 import images from "./images";
+import { Theme } from "./ThemeContext";
 
-export type Theme = "neutral" | "gryffindor" | "slytherin" | "ravenclaw" | "hufflepuff";
 type Page = "home" | "books" | "movies" | "characters" | "potions" | "spells";
 
-export function selectNavImage(active: boolean, theme: Theme, page: Page): any {
+export function SelectNavImage(active: boolean, theme: Theme, page: Page): any {
   const houseArray = {
     "neutral": images.neutral.navbar,
     "gryffindor": images.gryffindor.navbar,
     "slytherin": images.slytherin.navbar,
     "ravenclaw": images.ravenclaw.navbar,
-    "hufflepuff": images.hufflepuff.navbar
+    "hufflepuff": images.hufflepuff.navbar,
+    "disabled": images.disabled.navbar
   };
 
   let house;
+
   if (active) {
     house = houseArray[theme];
   }
   else {
-    house = houseArray["neutral"];
+    house = houseArray["disabled"]
   }
 
   const imgArray = {
@@ -28,7 +30,6 @@ export function selectNavImage(active: boolean, theme: Theme, page: Page): any {
     "potions": house.potions,
     "spells": house.spells
   };
-
 
   return imgArray[page];
 }

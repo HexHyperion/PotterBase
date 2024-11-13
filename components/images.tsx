@@ -1,4 +1,4 @@
-// Friendship ended with the stupid static path require() thing, I don't have friends now
+// Friendship ended with require(), I don't have friends now
 
 const images = {
   neutral: {
@@ -35,7 +35,7 @@ const images = {
     navbar: {
       home: require(`@/assets/images/theme/ravenclaw/hogwarts.png`),
       books: require(`@/assets/images/theme/ravenclaw/pen.png`),
-      movies: require(`@/assets/images/theme/neutral/map.png`),
+      movies: require(`@/assets/images/theme/ravenclaw/map.png`),
       characters: require(`@/assets/images/theme/ravenclaw/hedwig.png`),
       potions: require(`@/assets/images/theme/ravenclaw/potion.png`),
       spells: require(`@/assets/images/theme/ravenclaw/wand.png`)
@@ -49,6 +49,16 @@ const images = {
       characters: require(`@/assets/images/theme/hufflepuff/hedwig.png`),
       potions: require(`@/assets/images/theme/hufflepuff/potion.png`),
       spells: require(`@/assets/images/theme/hufflepuff/wand.png`)
+    }
+  },
+  disabled: {
+    navbar: {
+      home: require(`@/assets/images/theme/disabled/hogwarts.png`),
+      books: require(`@/assets/images/theme/disabled/pen.png`),
+      movies: require(`@/assets/images/theme/disabled/map.png`),
+      characters: require(`@/assets/images/theme/disabled/hedwig.png`),
+      potions: require(`@/assets/images/theme/disabled/potion.png`),
+      spells: require(`@/assets/images/theme/disabled/wand.png`)
     }
   }
 };
