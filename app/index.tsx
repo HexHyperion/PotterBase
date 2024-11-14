@@ -1,15 +1,16 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useContext, useState } from "react";
 import { Text, View, Button, Image, StyleSheet, StatusBar, StyleProp, TextStyle, ColorValue } from "react-native";
-import Home from "./home";
-import Books from "./books";
-import Movies from "./movies";
-import Characters from "./characters";
-import Potions from "./potions";
-import Spells from "./spells";
+import Home from "./Home";
+import Books from "./Books";
+import Movies from "./Movies";
+import Characters from "./Characters";
+import Potions from "./Potions";
+import Spells from "./Spells";
 import { SelectNavImage } from "@/components/SelectImage";
-import { ThemeContext, Theme, ChangeTheme } from "@/components/ThemeContext";
-import themes from "@/components/themes";
+import { ThemeContext, Theme } from "@/components/ThemeContext";
+import themes from "@/constants/Themes";
+import ThemeSelector from "@/components/ThemeSelector";
 // import { UseNetInfo } from "@react-native-community/netinfo"
 
 const Tab = createBottomTabNavigator();
@@ -18,15 +19,17 @@ StatusBar.setBarStyle('light-content')
 StatusBar.setBackgroundColor("black")
 
 function RootStack() {
-  const theme = useContext(ThemeContext);
-  const accentColor = themes[theme].color;
+  const theme = useContext(ThemeContext).theme;
+  const accentColor = themes[theme as Theme].color;
+  console.log(theme);
+
   // NEXT UP figure out how to change the theme dynamically
 
   return (
     <Tab.Navigator sceneContainerStyle={{backgroundColor: "black"}} screenOptions={{
       headerStyle: {backgroundColor: accentColor},  // for debugging
-      headerTintColor: "white",
-      tabBarStyle: {backgroundColor: "black", borderColor: "white", height: 60, paddingTop: 8}
+      headerTintColor: accentColor == "white" ? "black" : "white",
+      tabBarStyle: {backgroundColor: "black", borderColor: "white", height: 60, paddingTop: 6, paddingBottom: 6}
     }}>
       <Tab.Screen name="Home" component={Home} options={{
         tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Home"),
@@ -70,11 +73,12 @@ function RootStack() {
 }
 
 export default function Index() {
-  const theme = useContext(ThemeContext)
-  const accentColor = themes[theme as Theme].color
+  const [theme, setTheme] = useState("slytherin" as Theme);
+  const value = {theme, setTheme};
   return (
-    <ThemeContext.Provider value={theme}>
+    <ThemeContext.Provider value={value}>
       <RootStack/>
+      <ThemeSelector/>
     </ThemeContext.Provider>
   );
 }

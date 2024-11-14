@@ -1,4 +1,4 @@
-import images from "./images";
+import images from "../constants/Images";
 import { Theme } from "./ThemeContext";
 
 type Page = "home" | "books" | "movies" | "characters" | "potions" | "spells";
