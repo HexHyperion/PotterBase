@@ -1,0 +1,1 @@
+export type Theme = "neutral" | "gryffindor" | "slytherin" | "ravenclaw" | "hufflepuff" | "disabled";

@@ -1,9 +1,10 @@
+import FetchingList from "@/components/FetchingList"
 import { View, Text } from "react-native"
 
 export default function Characters() {
   return (
     <>
-      <Text>This is characters</Text>
+      <FetchingList path={"characters"}></FetchingList>
     </>
   )
 }

@@ -8,9 +8,10 @@ import Characters from "./Characters";
 import Potions from "./Potions";
 import Spells from "./Spells";
 import { SelectNavImage } from "@/components/SelectImage";
-import { ThemeContext, Theme } from "@/components/ThemeContext";
+import { ThemeContext } from "@/components/ThemeContext";
 import themes from "@/constants/Themes";
 import ThemeSelector from "@/components/ThemeSelector";
+import { Theme } from "@/constants/Types";
 // import { UseNetInfo } from "@react-native-community/netinfo"
 
 const Tab = createBottomTabNavigator();
@@ -21,15 +22,12 @@ StatusBar.setBackgroundColor("black")
 function RootStack() {
   const theme = useContext(ThemeContext).theme;
   const accentColor = themes[theme as Theme].color;
-  console.log(theme);
-
-  // NEXT UP figure out how to change the theme dynamically
 
   return (
     <Tab.Navigator sceneContainerStyle={{backgroundColor: "black"}} screenOptions={{
-      headerStyle: {backgroundColor: accentColor},  // for debugging
-      headerTintColor: accentColor == "white" ? "black" : "white",
-      tabBarStyle: {backgroundColor: "black", borderColor: "white", height: 60, paddingTop: 6, paddingBottom: 6}
+      headerStyle: {backgroundColor: "black"},  // for debugging
+      headerTintColor: accentColor == "white" || accentColor == "#ffd90d" ? "black" : "white",
+      tabBarStyle: {backgroundColor: "black", borderColor: "#2a2a2a", height: 60, paddingTop: 6, paddingBottom: 6}
     }}>
       <Tab.Screen name="Home" component={Home} options={{
         tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Home"),
@@ -73,12 +71,12 @@ function RootStack() {
 }
 
 export default function Index() {
-  const [theme, setTheme] = useState("slytherin" as Theme);
+  const [theme, setTheme] = useState("gryffindor" as Theme);  // CHANGE IT LATER TO USE ASYNCMEMORY!!!
   const value = {theme, setTheme};
   return (
     <ThemeContext.Provider value={value}>
       <RootStack/>
-      <ThemeSelector/>
+      {/* <ThemeSelector/> */}
     </ThemeContext.Provider>
   );
 }

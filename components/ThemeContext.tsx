@@ -1,6 +1,5 @@
 import { createContext } from "react";
-
-export type Theme = "neutral" | "gryffindor" | "slytherin" | "ravenclaw" | "hufflepuff" | "disabled";
+import { Theme } from "@/constants/Types";
 
 export const ThemeContext = createContext({
     theme: "gryffindor" as Theme,
