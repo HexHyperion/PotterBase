@@ -23,9 +23,13 @@ export default function RootStack() {
 
   return (
     <Tab.Navigator sceneContainerStyle={{backgroundColor: "black"}} screenOptions={{
-      headerStyle: {backgroundColor: "black"},
-      headerTintColor: accentColor == "white" || accentColor == "#ffd90d" ? "black" : "white",
-      tabBarStyle: {backgroundColor: "black", borderColor: "#2a2a2a", height: 60, paddingTop: 6, paddingBottom: 6}
+      headerShown: false,
+      tabBarStyle: {
+        backgroundColor: "black",
+        borderColor: "#2a2a2a",
+        height: 60,
+        paddingVertical: 6
+      }
     }}>
       <Tab.Screen name="Home" component={Home} options={{
         tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Home"),

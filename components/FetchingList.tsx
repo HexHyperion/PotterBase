@@ -1,68 +1,101 @@
-import { FlatList, Text, StyleSheet } from "react-native"
+import { FlatList, Text, StyleSheet, Button, View, TouchableHighlight } from "react-native"
 import { useEffect, useState } from "react"
-import { FetchedData, PotterObject } from "@/constants/Types"
+import { Character, FetchedData, NestedNavigationParams, PotterObject } from "@/constants/Types"
+import { createStackNavigator } from "@react-navigation/stack"
+import { useRoute } from "@react-navigation/native"
+import { Theme } from "@/constants/Types"
+import themes from "@/constants/Themes"
 
 const endpoint = "https://api.potterdb.com/v1/"
+const Stack = createStackNavigator()
 
-export default function FetchingList({path}: {path: string}) {
+export default function FetchingList({navigation}: {navigation: any}) {
 
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState<FetchedData>({} as FetchedData)
+  const route = useRoute()
+  try {
+    const path = (route.params as NestedNavigationParams).path
 
-  const fetchData = async () => {
-    const response = await fetch(endpoint + path)
-    const data = await response.json()
-    setData(data)
-    setLoading(false)
-  }
+    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState<FetchedData>({} as FetchedData)
 
-  useEffect(() => {fetchData()}, [])
-
-  const renderItem = ({item}: {item: PotterObject}) => {
-    // Using JS switch-case for the first time in my life, haha
-    switch (item.type){
-      case "book": {
-        return <Text style={listStyles.items}>{item.attributes.title}</Text>
-      }
-      case "chapter": {
-        return <Text style={listStyles.items}>{item.attributes.title} ({item.relationships.book.data.id})</Text>
-      }
-      case "movie": {
-        return <Text style={listStyles.items}>{item.attributes.title}</Text>
-      }
-      case "character": {
-        return <Text style={listStyles.items}>{item.attributes.name}{item.attributes.house ? ` (${item.attributes.house})` : ""}</Text>
-      }
-      case "potion": {
-        return <Text style={listStyles.items}>{item.attributes.name}</Text>
-      }
-      case "spell": {
-        return <Text style={listStyles.items}>{item.attributes.name}</Text>
-      }
+    const fetchData = async () => {
+      const response = await fetch(endpoint + path)
+      const data = await response.json()
+      setData(data)
+      setLoading(false)
     }
-  }
 
-  return (
-    <>
-      {loading && <Text style={{color: "white"}}>Loading...</Text>}
-      {!loading && (
-        <FlatList
-          data={data.data as ArrayLike<PotterObject>}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      )}
-    </>
-  )
+    useEffect(() => {fetchData()}, [])
+
+    function renderItem({item}: {item: PotterObject}) {
+      const handlePress = () => {
+        console.log("zigga");
+
+        navigation.navigate("Details", { object: item })
+      }
+
+      const getItemText = (item: PotterObject) => {
+        switch (item.type) {
+          case "book": return <>{item.attributes.title} <Text style={{color: "#6a6a6a"}}>by {item.attributes.author}</Text></>
+          case "chapter": return <>{item.attributes.title} <Text style={{color: "#6a6a6a"}}>(from book {item.relationships.book.data.id})</Text></>
+          case "movie": return <>{item.attributes.title} <Text style={{color: "#6a6a6a"}}>({item.attributes.release_date.replaceAll("-",".")})</Text></>
+          case "character": return <>{item.attributes.name}  <Text style={{color: "#6a6a6a"}}>{item.attributes.house}</Text></>
+          case "potion": return <>{item.attributes.name}  <Text style={{color: "#6a6a6a"}}>{item.attributes.difficulty}</Text></>
+          case "spell": return <>{item.attributes.name}  <Text style={{color: "#6a6a6a"}}>{item.attributes.category}</Text></>
+          default: return <>[Unknown Item]</>
+        }
+      }
+
+      return (
+        <TouchableHighlight style={listStyles.button} onPress={handlePress}><Text style={listStyles.text}>{getItemText(item)}</Text></TouchableHighlight>
+      )
+    }
+
+    return (
+      <>
+        {loading && <Text style={{color: "white"}}>Loading...</Text>}
+        {!loading && (
+          <FlatList
+            style={listStyles.list}
+            data={data.data as ArrayLike<PotterObject>}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        )}
+      </>
+    )
+  }
+  catch (err) {
+    console.log(err);
+    return <><Text style={{color: "white"}}>Something went wrong during loading the list!</Text><Text style={{color: "white"}}>Application returned {`${err}`}</Text></>
+  }
 }
 
+function getHouseColor(item: Character): string {
+  const house = item.attributes.house
+  console.log(house);
+
+  if (house && ["gryffindor","slytherin","ravenclaw","hufflepuff"].includes(house.toLowerCase())) {
+    console.log(house, house as Theme);
+
+    return themes[(house as Theme).toLowerCase() as Theme].color
+  }
+  else return "white"
+}
 
 const listStyles = StyleSheet.create({
-  items: {
-    borderWidth: 1,
-    borderColor: "#3a3a3a",
-    padding: 10,
-    marginVertical: 4,
-    color: "white"
+  list: {
+    backgroundColor: "black"
+  },
+  button: {
+    backgroundColor: "#1a1a1a",
+    padding: 15,
+    margin: 5,
+    marginHorizontal: 10,
+    borderRadius: 10
+  },
+  text: {
+    color: "white",
+    fontSize: 16
   }
 })

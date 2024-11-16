@@ -1,10 +1,10 @@
-import FetchingList from "@/components/FetchingList"
-import { View, Text } from "react-native"
+import { createStackNavigator } from "@react-navigation/stack"
+import NestedNavigator from "@/components/NestedNavigator"
+
+const Stack = createStackNavigator()
 
 export default function Characters() {
   return (
-    <>
-      <FetchingList path={"characters"}></FetchingList>
-    </>
+    <NestedNavigator category="Characters"/>
   )
 }

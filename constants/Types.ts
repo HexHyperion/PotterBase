@@ -1,5 +1,9 @@
 export type Theme = "neutral" | "gryffindor" | "slytherin" | "ravenclaw" | "hufflepuff" | "disabled";
 
+export type Category = "Books" | "Movies" | "Characters" | "Potions" | "Spells"
+
+export type NestedNavigationParams = { path: string }
+
 export type PotterObject = Book | Chapter | Movie | Character | Potion | Spell
 
 export type FetchedData = {

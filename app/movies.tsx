@@ -1,10 +1,11 @@
 import FetchingList from "@/components/FetchingList"
+import NestedNavigator from "@/components/NestedNavigator"
 import { View, Text } from "react-native"
 
 export default function Movies() {
   return (
     <>
-      <FetchingList path={"movies"}></FetchingList>
+      <NestedNavigator category="Movies"/>
     </>
   )
 }
