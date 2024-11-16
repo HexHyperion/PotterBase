@@ -1,9 +1,10 @@
+import FetchingList from "@/components/FetchingList"
 import { View, Text } from "react-native"
 
 export default function Books() {
   return (
     <>
-      <Text>This is books</Text>
+      <FetchingList path={"books"}></FetchingList>
     </>
   )
 }

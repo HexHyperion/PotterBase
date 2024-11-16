@@ -1,9 +1,10 @@
+import FetchingList from "@/components/FetchingList"
 import { View, Text } from "react-native"
 
 export default function Movies() {
   return (
     <>
-      <Text>This is movies</Text>
+      <FetchingList path={"movies"}></FetchingList>
     </>
   )
 }

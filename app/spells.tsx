@@ -1,9 +1,10 @@
+import FetchingList from "@/components/FetchingList"
 import { View, Text } from "react-native"
 
 export default function Spells() {
   return (
     <>
-      <Text>This is spells</Text>
+      <FetchingList path={"spells"}></FetchingList>
     </>
   )
 }
