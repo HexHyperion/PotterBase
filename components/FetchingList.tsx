@@ -29,8 +29,6 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
     function renderItem({item}: {item: PotterObject}) {
       const handlePress = () => {
-        console.log("zigga");
-
         navigation.navigate("Details", { object: item })
       }
 
@@ -69,18 +67,6 @@ export default function FetchingList({navigation}: {navigation: any}) {
     console.log(err);
     return <><Text style={{color: "white"}}>Something went wrong during loading the list!</Text><Text style={{color: "white"}}>Application returned {`${err}`}</Text></>
   }
-}
-
-function getHouseColor(item: Character): string {
-  const house = item.attributes.house
-  console.log(house);
-
-  if (house && ["gryffindor","slytherin","ravenclaw","hufflepuff"].includes(house.toLowerCase())) {
-    console.log(house, house as Theme);
-
-    return themes[(house as Theme).toLowerCase() as Theme].color
-  }
-  else return "white"
 }
 
 const listStyles = StyleSheet.create({
