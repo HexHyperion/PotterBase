@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Button } from "react-native";
-import { Theme, ThemeContext } from "./ThemeContext";
+import { ThemeContext } from "./ThemeContext";
 import themes from "@/constants/Themes";
 
 export default function ThemeSelector() {

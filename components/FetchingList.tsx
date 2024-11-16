@@ -1,7 +1,6 @@
-import { FlatList, Text, View, StyleSheet } from "react-native"
+import { FlatList, Text, StyleSheet } from "react-native"
 import { useEffect, useState } from "react"
-import { filters } from "@/constants/Filters"
-import { FetchedData, PotterObject, Theme, Character } from "@/constants/Types"
+import { FetchedData, PotterObject } from "@/constants/Types"
 
 const endpoint = "https://api.potterdb.com/v1/"
 
@@ -60,7 +59,8 @@ export default function FetchingList({path}: {path: string}) {
 
 const listStyles = StyleSheet.create({
   items: {
-    backgroundColor: "#1a1a1a",
+    borderWidth: 1,
+    borderColor: "#3a3a3a",
     padding: 10,
     marginVertical: 4,
     color: "white"

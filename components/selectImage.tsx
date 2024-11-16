@@ -1,5 +1,5 @@
-import images from "../constants/Images";
-import { Theme } from "./ThemeContext";
+import images from "@/constants/Images";
+import { Theme } from "@/constants/Types";
 
 type Page = "home" | "books" | "movies" | "characters" | "potions" | "spells";
 
