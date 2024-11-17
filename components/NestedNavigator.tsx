@@ -1,6 +1,6 @@
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack"
 import FetchingList from "@/components/FetchingList/FetchingList"
-import Details from "@/app/tabs/Details"
+import Details from "@/app/Details"
 import { Category } from "@/constants/Types"
 import { useContext } from "react"
 import { ThemeContext } from "./ThemeContext"

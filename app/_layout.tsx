@@ -1,12 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useContext } from "react";
 import { Text, Image, StatusBar, ColorValue } from "react-native";
-import Home from "./tabs/Home";
-import Books from "./tabs/Books";
-import Movies from "./tabs/Movies";
-import Characters from "./tabs/Characters";
-import Potions from "./tabs/Potions";
-import Spells from "./tabs/Spells";
+import Home from "./Home";
+import Books from "./Books";
+import Movies from "./Movies";
+import Characters from "./Characters";
+import Potions from "./Potions";
+import Spells from "./Spells";
 import { SelectNavImage } from "@/components/SelectImage";
 import { ThemeContext } from "@/components/ThemeContext";
 import themes from "@/constants/Themes";
