@@ -34,9 +34,9 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
       const getItemText = (item: PotterObject) => {
         switch (item.type) {
-          case "book": return <>{item.attributes.title} <Text style={{color: "#6a6a6a"}}>by {item.attributes.author}</Text></>
-          case "chapter": return <>{item.attributes.title} <Text style={{color: "#6a6a6a"}}>(from book {item.relationships.book.data.id})</Text></>
-          case "movie": return <>{item.attributes.title} <Text style={{color: "#6a6a6a"}}>({item.attributes.release_date.replaceAll("-",".")})</Text></>
+          case "book": return <>{item.attributes.title}</>
+          case "chapter": return <>{item.attributes.title}</>
+          case "movie": return <>{item.attributes.title}</>
           case "character": return <>{item.attributes.name}  <Text style={{color: "#6a6a6a"}}>{item.attributes.house}</Text></>
           case "potion": return <>{item.attributes.name}  <Text style={{color: "#6a6a6a"}}>{item.attributes.difficulty}</Text></>
           case "spell": return <>{item.attributes.name}  <Text style={{color: "#6a6a6a"}}>{item.attributes.category}</Text></>
