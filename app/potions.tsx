@@ -1,4 +1,4 @@
-import FetchingList from "@/components/FetchingList"
+import FetchingList from "@/components/FetchingList/FetchingList"
 import NestedNavigator from "@/components/NestedNavigator"
 import { View, Text } from "react-native"
 

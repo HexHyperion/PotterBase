@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { PotterObject } from "@/constants/Types";
-import Space from "../Space";
+import Space from "@/components/Space";
 import DetailCollapsible from "./DetailCollapsible";
 import DetailLabel from "./DetailLabel";
 
