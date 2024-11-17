@@ -8,7 +8,8 @@ import { Theme } from "@/constants/Types";
 import { TouchableWithoutFeedback } from "react-native";
 import Space from "@/components/Space";
 import DetailList from "@/components/Details/DetailList";
-import { getImage, getData, getHouseColor, detailStyles } from "@/components/Details/DetailFunctions";
+import { getImage, getData, getHouseColor } from "@/components/Details/DetailFunctions";
+import detailStyles from "@/components/Details/DetailStyles";
 
 export default function Details({navigation, route}: {navigation: any, route: any}) {
   const object = route.params.object as PotterObject
@@ -82,5 +83,6 @@ export default function Details({navigation, route}: {navigation: any, route: an
         </ScrollView>
       )
     }
+    default: return <Text style={detailStyles.text}>[Unknown object!]</Text>
   }
 }

@@ -1,7 +1,10 @@
-import { Text, StyleSheet } from "react-native";
-import themes from "../../constants/Themes";
-import { Character, Theme, PotterObject } from "../../constants/Types";
+import { Text } from "react-native";
+import themes from "@/constants/Themes";
+import { Character, Theme, PotterObject } from "@/constants/Types";
+import detailStyles from "./DetailStyles";
 
+
+// Returns a usable (e.g. hex code) color of a given character's Hogwarts house
 export function getHouseColor(item: Character): string {
   const house = item.attributes.house
 
@@ -13,37 +16,21 @@ export function getHouseColor(item: Character): string {
   else return "#6a6a6a"
 }
 
+
+// Returns a given object's image, or notfound.png if there's none
 export function getImage(object: PotterObject, prop: "image" | "cover" | "poster") {
   return (object.attributes as any)[prop] ? {uri: ((object.attributes as any)[prop])} : require("@/assets/images/notfound.png")
 }
 
+
+// Returns a given property value of a given object, or n/d if it's null
 export function getData(object: PotterObject, prop: string) {
   return (object.attributes as any)[toProp(prop)] ?? <Text style={detailStyles.disabled}>n/d</Text>
 }
 
+
+// Transforms a human-readable property name into a PotterDB object field name
+// Even if a nonexistent label is given, getData() will just return n/d
 export function toProp(label: string): string {
   return label.trim().replaceAll(" ", "_").replaceAll(":", "").toLowerCase()
 }
-
-export const detailStyles = StyleSheet.create({
-  image: {
-    height: 200,
-    width: 200,
-    borderWidth: 1,
-    objectFit: "contain"
-  },
-  text: {
-    color: "white"
-  },
-  header: {
-    fontSize: 30,
-    color: "white"
-  },
-  wrapper: {
-    paddingHorizontal: 20,
-    paddingVertical: 10
-  },
-  disabled: {
-    color: "#6a6a6a"
-  }
-})

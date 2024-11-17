@@ -2,14 +2,34 @@ export type Theme = "neutral" | "gryffindor" | "slytherin" | "ravenclaw" | "huff
 
 export type Category = "Books" | "Movies" | "Characters" | "Potions" | "Spells"
 
+export type Link = "current" | "first" | "prev" | "next" | "last"
+
 export type NestedNavigationParams = { path: string }
 
 export type PotterObject = Book | Chapter | Movie | Character | Potion | Spell
 
 export type FetchedData = {
-  data: object[]
-  meta: object
-  links: object
+  data: PotterObject[]
+  meta: {
+    pagination: {
+      current: number
+      first: number | undefined
+      prev: number | undefined
+      next: number | undefined
+      last: number | undefined
+      records: number
+    }
+    copyright: string
+    generated_at: string
+  }
+  links: {
+    self: string
+    current: string
+    first: string | undefined
+    prev: string | undefined
+    next: string | undefined
+    last: string | undefined
+  }
 }
 
 export type Book = {
