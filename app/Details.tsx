@@ -1,4 +1,4 @@
-import themes from "@/constants/Themes";
+import { themes } from "@/constants/Themes";
 import { Character, PotterObject } from "@/constants/Types";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";

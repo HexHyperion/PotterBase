@@ -9,7 +9,7 @@ import Potions from "./Potions";
 import Spells from "./Spells";
 import { SelectNavImage } from "@/components/SelectImage";
 import { ThemeContext } from "@/components/ThemeContext";
-import themes from "@/constants/Themes";
+import { themes } from "@/constants/Themes";
 import { Theme } from "@/constants/Types";
 
 const Tab = createBottomTabNavigator();

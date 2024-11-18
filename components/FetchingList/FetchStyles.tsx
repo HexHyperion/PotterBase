@@ -6,7 +6,6 @@ const fetchStyles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#1a1a1a",
-    padding: 15,
     margin: 5,
     borderRadius: 10
   },
@@ -56,11 +55,24 @@ const fetchStyles = StyleSheet.create({
   card: {
     flex: 1,
     flexDirection: "row",
-    gap: 15
+    gap: 15,
+    padding: 10,
+    borderRadius: 10
+  },
+  cardWithBorder: {
+    flex: 1,
+    flexDirection: "row",
+    gap: 15,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#1a1a1aee"  // RGBA? Nice!
+  },
+  cardBorder: {
+    borderRadius: 10,
   },
   cardInside: {
     // paddingHorizontal: 10,
-    flex: 1
+    flex: 1,
   },
   image: {
     height: "100%",

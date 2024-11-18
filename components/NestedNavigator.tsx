@@ -4,7 +4,7 @@ import Details from "@/app/Details"
 import { Category } from "@/constants/Types"
 import { useContext } from "react"
 import { ThemeContext } from "./ThemeContext"
-import themes from "@/constants/Themes"
+import { themes } from "@/constants/Themes"
 
 const Stack = createStackNavigator()
 
