@@ -13,9 +13,11 @@ import { Double } from "react-native/Libraries/Types/CodegenTypes"
 import { LinearGradient } from "react-native-linear-gradient"
 import fetchStyles from "./FetchStyles"
 import FetchingCard from "./FetchingCard"
+import images from "@/constants/Images"
 
 const endpoint = "https://api.potterdb.com/v1/"
 const Stack = createStackNavigator()
+let currentQuery: string = ""
 
 export default function FetchingList({navigation}: {navigation: any}) {
 
@@ -40,6 +42,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
         setData(fetchedData)
       }
       catch (err) {
+        console.log("fetchData failed")
         console.error(err)
       }
       finally {
@@ -48,6 +51,15 @@ export default function FetchingList({navigation}: {navigation: any}) {
     }
 
     useEffect(() => {fetchData(endpoint + path)}, [])
+
+
+    // TEMPORARY
+    // if (data.data && data.data.length < 1) return (
+    //   <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+    //     <Text style={{color: "white", textAlign: "center"}}>The request didn't return anything. Click the button below to refresh.</Text>
+    //     <Button title="Refresh" onPress={() => fetchData(endpoint+path)}/>
+    //   </View>
+    // )
 
 
     // Returns every item (card) of the FetchingList one by one
@@ -85,10 +97,28 @@ export default function FetchingList({navigation}: {navigation: any}) {
       }
     }
 
+    const handleSearch = ({nativeEvent: {text}}: {nativeEvent: {text: string}}) => {
+      try {
+        currentQuery = text
+        fetchData(endpoint + path + `?filter[name_cont]=${text.replaceAll(" ", "")}`)
+      }
+      catch (err) {
+        console.log(err)
+      }
+      finally {
+        return
+      }
+    }
+
+    const handleReset = () => {
+      fetchData(endpoint + path + `?page[number]=${data.meta.pagination.current}`)
+      currentQuery = ""
+    }
+
     // Navigation between pages - first, previous, exact, next and last
     // TODO disable inactive buttons
     const FetchingNavigation = () => {
-      return (
+      if ((data.meta.pagination.last && data.meta.pagination.last > 1) || data.meta.pagination.current > 1) return (
         <View style={fetchStyles.nav}>
         <TouchableHighlight style={fetchStyles.navButton} onPress={() => handlePage("first")}><Text style={fetchStyles.text}>&lt;&lt;</Text></TouchableHighlight>
         <TouchableHighlight style={fetchStyles.navButton} onPress={() => handlePage("prev")}><Text style={fetchStyles.text}>&lt;</Text></TouchableHighlight>
@@ -97,14 +127,21 @@ export default function FetchingList({navigation}: {navigation: any}) {
         <TouchableHighlight style={fetchStyles.navButton} onPress={() => handlePage("last")}><Text style={fetchStyles.text}>&gt;&gt;</Text></TouchableHighlight>
       </View>
       )
+      else return null
     }
 
     return (
       <>
         {loading && <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}><Text style={{color: "white"}}>Loading...</Text></View>}
-        {!loading && (
+        {!loading && (data.data && data.data.length > 0 ? (
           <>
-            <TextInput placeholderTextColor="white" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input}></TextInput>
+            <View style={fetchStyles.inputWrapper}>
+              <View style={fetchStyles.inputGroup}>
+                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input}></TextInput>
+                <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.bolt : images.neutral.buttons.bolt} style={{height: 25, width: 30}}/></TouchableOpacity>
+              </View>
+              <TouchableOpacity activeOpacity={0.85} style={fetchStyles.inputButton} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
+            </View>
             <FlatList
               style={fetchStyles.list}
               data={data.data as ArrayLike<PotterObject>}
@@ -114,7 +151,21 @@ export default function FetchingList({navigation}: {navigation: any}) {
               ListFooterComponent={FetchingNavigation}
             />
           </>
-        )}
+        ) : (
+          <>
+            <View style={fetchStyles.inputWrapper}>
+              <View style={fetchStyles.inputGroup}>
+                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" style={fetchStyles.input}></TextInput>
+                <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.bolt : images.neutral.buttons.bolt} style={{height: 25, width: 30}}/></TouchableOpacity>
+              </View>
+              <TouchableOpacity activeOpacity={0.85} style={fetchStyles.inputButton} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
+            </View>
+            <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+              <Text style={fetchStyles.header}>No records found!</Text>
+              <Text style={fetchStyles.text}>Check the spelling or try a different query.</Text>
+            </View>
+          </>
+        ))}
       </>
     )
   }
@@ -122,8 +173,8 @@ export default function FetchingList({navigation}: {navigation: any}) {
     console.log(err);
     return (
       <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <Text style={{color: "white"}}>Something went wrong during loading the list!</Text>
-        <Text style={{color: "white"}}>Application returned {`${err}`}</Text>
+        <Text style={{color: "white", textAlign: "center"}}>Something went wrong during loading the list!</Text>
+        <Text style={{color: "white", textAlign: "center"}}>Application returned {`${err}`}</Text>
       </View>
     )
   }

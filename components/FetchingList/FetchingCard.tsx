@@ -11,8 +11,8 @@ export default function FetchingCard({item}: {item: PotterObject}) {
     case "book": {
       return (
         <View style={fetchStyles.card}>
-          <View style={{...fetchStyles.bookImageView, ...fetchStyles.imageView}}>
-            <Image style={{...fetchStyles.bookImage, ...fetchStyles.image}} source={getImage(item, "cover")}/>
+          <View style={[fetchStyles.bookImageView, fetchStyles.imageView]}>
+            <Image style={[fetchStyles.bookImage, fetchStyles.image]} source={getImage(item, "cover")}/>
           </View>
           <View style={fetchStyles.cardInside}>
             <Text style={fetchStyles.header}>{item.attributes.title}</Text>
@@ -29,8 +29,8 @@ export default function FetchingCard({item}: {item: PotterObject}) {
     case "movie": {
       return (
         <View style={fetchStyles.card}>
-          <View style={{...fetchStyles.movieImageView, ...fetchStyles.imageView}}>
-            <Image style={{...fetchStyles.movieImage, ...fetchStyles.image}} source={getImage(item, "poster")}/>
+          <View style={[fetchStyles.movieImageView, fetchStyles.imageView]}>
+            <Image style={[fetchStyles.movieImage, fetchStyles.image]} source={getImage(item, "poster")}/>
           </View>
           <View style={fetchStyles.cardInside}>
             <Text style={fetchStyles.header}>{item.attributes.title}</Text>
@@ -44,8 +44,8 @@ export default function FetchingCard({item}: {item: PotterObject}) {
     case "character": {
       return (
         <View style={fetchStyles.card}>
-          <View style={{...fetchStyles.characterImageView, ...fetchStyles.imageView}}>
-            <Image style={{...fetchStyles.characterImage, ...fetchStyles.image}} source={getImage(item, "image")}/>
+          <View style={[fetchStyles.characterImageView, fetchStyles.imageView]}>
+            <Image style={[fetchStyles.characterImage, fetchStyles.image]} source={getImage(item, "image")}/>
           </View>
           <View style={fetchStyles.cardInside}>
             <Text style={fetchStyles.header}>{item.attributes.name}</Text>
@@ -62,8 +62,8 @@ export default function FetchingCard({item}: {item: PotterObject}) {
       return (
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} style={fetchStyles.cardBorder} colors={gradient}>
           <View style={fetchStyles.cardWithBorder}>
-            <View style={{...fetchStyles.potionImageView, ...fetchStyles.imageView}}>
-              <Image style={{...fetchStyles.potionImage, ...fetchStyles.image}} source={getImage(item, "image")}/>
+            <View style={[fetchStyles.potionImageView, fetchStyles.imageView]}>
+              <Image style={[fetchStyles.potionImage, fetchStyles.image]} source={getImage(item, "image")}/>
             </View>
             <View style={fetchStyles.cardInside}>
               <Text style={fetchStyles.header}>{item.attributes.name}</Text>
@@ -79,8 +79,8 @@ export default function FetchingCard({item}: {item: PotterObject}) {
       return (
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} style={fetchStyles.cardBorder} colors={gradient}>
           <View style={fetchStyles.cardWithBorder}>
-            <View style={{...fetchStyles.spellImageView, ...fetchStyles.imageView}}>
-              <Image style={{...fetchStyles.spellImage, ...fetchStyles.image}} source={getImage(item, "image")}/>
+            <View style={[fetchStyles.spellImageView, fetchStyles.imageView]}>
+              <Image style={[fetchStyles.spellImage, fetchStyles.image]} source={getImage(item, "image")}/>
             </View>
             <View style={fetchStyles.cardInside}>
               <Text style={fetchStyles.header}>{item.attributes.name}</Text>

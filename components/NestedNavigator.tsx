@@ -15,7 +15,14 @@ export default function NestedNavigator({category}: {category: Category}) {
         name="FetchingList"
         component={FetchingList}
         initialParams={{path: category.toLowerCase()}}
-        options={{headerTitle: category, headerStyle: {backgroundColor: "black"}, headerShadowVisible: false, headerTintColor: "white", cardStyle: {backgroundColor: "black"}}}
+        options={{
+          headerTitle: category,
+          headerTintColor: "white",
+          headerStyle: {backgroundColor: "black"},
+          headerTitleStyle: {fontFamily: "HarryP", fontSize: 40},
+          cardStyle: {backgroundColor: "black"},
+          headerShadowVisible: false
+        }}
       />
       <Stack.Screen name="Details" component={Details} options={{cardStyle: {backgroundColor: "rgba(0,0,0,0.95)"}, presentation: "transparentModal", headerStyle: {backgroundColor: "black"}, headerTintColor: "white", headerShadowVisible: false, ...TransitionPresets.RevealFromBottomAndroid}}/>
     </Stack.Navigator>

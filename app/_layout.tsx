@@ -28,7 +28,7 @@ export default function RootStack() {
         backgroundColor: "black",
         borderColor: "#2a2a2a",
         height: 60,
-        paddingVertical: 6
+        paddingVertical: 10
       }
     }}>
       <Tab.Screen name="Home" component={Home} options={{
@@ -75,12 +75,12 @@ export default function RootStack() {
 function SetNavLabelStyle(focused: boolean, targetColor: string, text: string) {
   if (focused) {
     return (
-      <Text style={{color: targetColor, fontSize: 10}}>{text}</Text>
+      <Text style={{color: targetColor, fontSize: 13, fontFamily: "Grenze-SemiBold"}}>{text}</Text>
     )
   }
   else {
     return (
-      <Text style={{color: (themes["disabled"].color as ColorValue), fontSize: 10}}>{text}</Text>
+      <Text style={{color: (themes["disabled"].color as ColorValue), fontSize: 13, fontFamily: "Grenze-SemiBold"}}>{text}</Text>
     )
   }
 }

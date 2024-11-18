@@ -9,6 +9,10 @@ const images = {
       characters: require(`@/assets/images/theme/neutral/hedwig.png`),
       potions: require(`@/assets/images/theme/neutral/potion.png`),
       spells: require(`@/assets/images/theme/neutral/wand.png`)
+    },
+    buttons: {
+      sorting: require(`@/assets/images/theme/neutral/sorting.png`),
+      bolt: require(`@/assets/images/theme/neutral/bolt.png`)
     }
   },
   gryffindor: {
@@ -19,6 +23,10 @@ const images = {
       characters: require(`@/assets/images/theme/gryffindor/hedwig.png`),
       potions: require(`@/assets/images/theme/gryffindor/potion.png`),
       spells: require(`@/assets/images/theme/gryffindor/wand.png`)
+    },
+    buttons: {
+      sorting: require(`@/assets/images/theme/gryffindor/sorting.png`),
+      bolt: require(`@/assets/images/theme/gryffindor/bolt.png`)
     }
   },
   slytherin: {
@@ -29,6 +37,10 @@ const images = {
       characters: require(`@/assets/images/theme/slytherin/hedwig.png`),
       potions: require(`@/assets/images/theme/slytherin/potion.png`),
       spells: require(`@/assets/images/theme/slytherin/wand.png`)
+    },
+    buttons: {
+      sorting: require(`@/assets/images/theme/slytherin/sorting.png`),
+      bolt: require(`@/assets/images/theme/slytherin/bolt.png`)
     }
   },
   ravenclaw: {
@@ -39,6 +51,10 @@ const images = {
       characters: require(`@/assets/images/theme/ravenclaw/hedwig.png`),
       potions: require(`@/assets/images/theme/ravenclaw/potion.png`),
       spells: require(`@/assets/images/theme/ravenclaw/wand.png`)
+    },
+    buttons: {
+      sorting: require(`@/assets/images/theme/ravenclaw/sorting.png`),
+      bolt: require(`@/assets/images/theme/ravenclaw/bolt.png`)
     }
   },
   hufflepuff: {
@@ -49,6 +65,10 @@ const images = {
       characters: require(`@/assets/images/theme/hufflepuff/hedwig.png`),
       potions: require(`@/assets/images/theme/hufflepuff/potion.png`),
       spells: require(`@/assets/images/theme/hufflepuff/wand.png`)
+    },
+    buttons: {
+      sorting: require(`@/assets/images/theme/hufflepuff/sorting.png`),
+      bolt: require(`@/assets/images/theme/hufflepuff/bolt.png`)
     }
   },
   disabled: {
@@ -59,6 +79,10 @@ const images = {
       characters: require(`@/assets/images/theme/disabled/hedwig.png`),
       potions: require(`@/assets/images/theme/disabled/potion.png`),
       spells: require(`@/assets/images/theme/disabled/wand.png`)
+    },
+    buttons: {
+      sorting: require(`@/assets/images/theme/disabled/sorting.png`),
+      bolt: require(`@/assets/images/theme/disabled/bolt.png`)
     }
   }
 };

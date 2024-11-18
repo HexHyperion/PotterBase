@@ -1,4 +1,4 @@
-// I'm not sure what _any and _all does and the documentation is crap
+// I'm not sure what does what and the documentation is crap
 
 export const filters = {
     eq:             "equals",

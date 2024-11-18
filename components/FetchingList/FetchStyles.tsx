@@ -11,8 +11,8 @@ const fetchStyles = StyleSheet.create({
   },
   header: {
     color: "white",
-    fontSize: 16,
-    fontWeight: "bold"
+    fontSize: 22,
+    fontFamily: "Grenze-Regular"
   },
   navButton: {
     flex: 1,
@@ -39,7 +39,9 @@ const fetchStyles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontSize: 14
+    fontFamily: "Lato-Regular",
+    fontSize: 14,
+    lineHeight: 20
   },
   disabled: {
     color: "#6a6a6a"
@@ -47,23 +49,61 @@ const fetchStyles = StyleSheet.create({
   input: {
     backgroundColor: "#1a1a1a",
     height: 40,
-    margin: 5,
-    borderRadius: 10,
+    flex: 99,
     color: "white",
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    fontFamily: "Lato-Regular"
+  },
+  inputGroup: {
+    backgroundColor: "#1a1a1a",
+    height: 40,
+    flex: 99,
+    borderRadius: 10,
+    display: "flex",
+    flexDirection: "row",
+    overflow: "hidden"
+  },
+  inputGroupButton: {
+    backgroundColor: "#1a1a1a",
+    height: 40,
+    width: 45,
+    color: "white",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  inputButton: {
+    backgroundColor: "#1a1a1a",
+    height: 40,
+    width: 50,
+    color: "white",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  inputWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    padding: 5,
+    gap: 10,
+    justifyContent: "space-between"
   },
   card: {
     flex: 1,
     flexDirection: "row",
     gap: 15,
-    padding: 10,
+    padding: 5,
+    paddingBottom: 15,
     borderRadius: 10
   },
   cardWithBorder: {
     flex: 1,
     flexDirection: "row",
     gap: 15,
-    padding: 10,
+    padding: 5,
+    paddingBottom: 15,
     borderRadius: 10,
     backgroundColor: "#1a1a1aee"  // RGBA? Nice!
   },
@@ -73,6 +113,7 @@ const fetchStyles = StyleSheet.create({
   cardInside: {
     // paddingHorizontal: 10,
     flex: 1,
+    paddingRight: 10
   },
   image: {
     height: "100%",
@@ -84,11 +125,11 @@ const fetchStyles = StyleSheet.create({
     position: "absolute"
   },
   movieImage: {
+    // I hate this crap, what the hell are these stupid transparent frames??? :(
+    height: "100%",
     minHeight: 120,
     width: 100,
-    position: "absolute",
-    objectFit: "cover",
-    left: -10             // I hate this crap, what the hell are these stupid transparent frames??? :(
+    objectFit: "cover"
   },
   characterImage: {
     // TODO AUTOMATIC HEIGHT
@@ -111,15 +152,21 @@ const fetchStyles = StyleSheet.create({
   imageView: {
     height: "100%",
     position: "relative",
-    overflow: "hidden"
+    overflow: "hidden",
+    marginTop: 5,
+    marginLeft: 5
   },
   bookImageView: {
     minHeight: 120,
-    width: 80
+    width: 80,
   },
   movieImageView: {
-    width: 80,
-    borderRadius: 5
+    height: "100%",
+    minHeight: 120,
+    width: 100,
+    borderRadius: 5,
+    paddingTop: 5,
+    backgroundColor: "black"
   },
   characterImageView: {
     minHeight: 120,

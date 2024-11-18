@@ -8,11 +8,15 @@ const detailStyles = StyleSheet.create({
     objectFit: "contain"
   },
   text: {
-    color: "white"
+    color: "white",
+    fontFamily: "Lato-Regular",
+    fontSize: 14,
+    lineHeight: 20
   },
   header: {
     fontSize: 30,
-    color: "white"
+    color: "white",
+    fontFamily: "Grenze-SemiBold"
   },
   wrapper: {
     paddingHorizontal: 20

@@ -4,8 +4,6 @@ import { View, Text } from "react-native"
 
 export default function Books() {
   return (
-    <>
-      <NestedNavigator category="Books"/>
-    </>
+    <NestedNavigator category="Books"/>
   )
 }
