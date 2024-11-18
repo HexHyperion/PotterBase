@@ -24,7 +24,19 @@ export default function NestedNavigator({category}: {category: Category}) {
           headerShadowVisible: false
         }}
       />
-      <Stack.Screen name="Details" component={Details} options={{cardStyle: {backgroundColor: "rgba(0,0,0,0.95)"}, presentation: "transparentModal", headerStyle: {backgroundColor: "black"}, headerTintColor: "white", headerShadowVisible: false, ...TransitionPresets.RevealFromBottomAndroid}}/>
+      <Stack.Screen
+        name="Details"
+        component={Details}
+        options={{
+          presentation: "transparentModal",
+          headerStyle: {backgroundColor: "black"},
+          headerTitleStyle: {fontFamily: "HarryP", fontSize: 26},
+          cardStyle: {backgroundColor: "rgba(0,0,0,0.95)"},
+          headerTintColor: "white",
+          headerShadowVisible: false,
+          ...TransitionPresets.RevealFromBottomAndroid
+        }}
+      />
     </Stack.Navigator>
   )
 }

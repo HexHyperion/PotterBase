@@ -24,21 +24,39 @@ export const webColors = [
 
 export const themes = {
   neutral: {
-    color: "white"
+    color: "white",
+    background: "black",
+    accent: "white",
+    gradient: ["#1a1a1a", "#1a1a1a"]
   },
   gryffindor: {
-    color: "#ff241c"
+    color: "#ff241c",
+    background: "#2f0d0d",
+    accent: "#d1812c",
+    gradient: ["#ff241c", "#d1812c"]
   },
   slytherin: {
-    color: "#05dc00"
+    color: "#05dc00",
+    background: "#0b270b",
+    accent: "#d6ffd2",
+    gradient: ["#05dc00", "#d6ffd2"]
   },
   ravenclaw: {
-    color: "#00b2ff"
+    color: "#00b2ff",
+    background: "#002230",
+    accent: "#d7d6dd",
+    gradient: ["#00b2ff", "#d7d6dd"]
   },
   hufflepuff: {
-    color: "#ffd90d"
+    color: "#ffd90d",
+    background: "#26240e",
+    accent: "#fafbe3",
+    gradient: ["#ffd90d", "#fafbe3"]
   },
   disabled: {
-    color: "#949494"
+    color: "#949494",
+    background: "gray",
+    accent: "#949494",
+    gradient: ["transparent", "transparent"]
   }
 }

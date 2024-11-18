@@ -10,9 +10,9 @@ import DetailLabel from "./DetailLabel";
 // Empty string inside the labels array creates a Space
 export default function DetailList({object, labels, collapsibles}: {object: PotterObject, labels: string[], collapsibles: string[]}) {
   return (
-    <>
+    <View>
       {(labels.map((label: string, index: number) => (label != "" ? <DetailLabel key={index} object={object} label={label}/> : <Space key={index}/>)))}
       {(collapsibles.map((label: string, index: number) => (<View key={index}><Space/><DetailCollapsible object={object} label={label}/></View>)))}
-    </>
+    </View>
   )
 }

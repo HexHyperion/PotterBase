@@ -14,12 +14,42 @@ const detailStyles = StyleSheet.create({
     lineHeight: 20
   },
   header: {
-    fontSize: 30,
+    fontSize: 26,
     color: "white",
-    fontFamily: "Grenze-SemiBold"
+    fontFamily: "Grenze-SemiBold",
+    lineHeight: 26,
+    marginTop: 5
   },
   wrapper: {
-    paddingHorizontal: 20
+    paddingHorizontal: 5
+  },
+  card: {
+    backgroundColor: "#1a1a1a",
+    borderRadius: 10,
+    paddingTop: 15,
+    paddingHorizontal: 15,
+    paddingBottom: 15,
+    marginBottom: 5
+  },
+  cardBackground: {
+    borderRadius: 10,
+    marginBottom: 5
+  },
+  cardInline: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 15,
+    // backgroundColor: "red"
+  },
+  cardDimmer: {
+    backgroundColor: "#000000aa",
+    paddingTop: 15,
+    paddingHorizontal: 15,
+    paddingBottom: 15
+  },
+  cardOutside: {
+    paddingHorizontal: 15,
+    paddingVertical: 10
   },
   disabled: {
     color: "#6a6a6a"
