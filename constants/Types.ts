@@ -6,6 +6,9 @@ export type Link = "current" | "first" | "prev" | "next" | "last"
 
 export type NestedNavigationParams = { path: string }
 
+export type HeaderPropName = "title" | "name"
+export type ImagePropName = "cover" | "poster" | "image"
+
 export type PotterObject = Book | Chapter | Movie | Character | Potion | Spell
 
 export type FetchedData = {
@@ -184,5 +187,24 @@ export type Spell = {
   }
   links: {
     self: string
+  }
+}
+
+export const fieldNames = {
+  image: {
+    book: "cover" as ImagePropName,
+    chapter: "cover" as ImagePropName,
+    movie: "poster" as ImagePropName,
+    character: "image" as ImagePropName,
+    potion: "image" as ImagePropName,
+    spell: "image" as ImagePropName
+  },
+  header: {
+    book: "title" as HeaderPropName,
+    chapter: "title" as HeaderPropName,
+    movie: "title" as HeaderPropName,
+    character: "name" as HeaderPropName,
+    potion: "name" as HeaderPropName,
+    spell: "name" as HeaderPropName
   }
 }

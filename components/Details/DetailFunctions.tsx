@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import { themes, webColors } from "@/constants/Themes";
-import { Character, Theme, PotterObject } from "@/constants/Types";
+import { Character, Theme, PotterObject, ImagePropName } from "@/constants/Types";
 import detailStyles from "./DetailStyles";
 
 
@@ -52,7 +52,7 @@ export function extractColors(description: string): string[] {
 
 
 // Returns a given object's image, or notfound.png if there's none
-export function getImage(object: PotterObject, prop: "image" | "cover" | "poster") {
+export function getImage(object: PotterObject, prop: ImagePropName) {
   return (object.attributes as any)[prop] ? {uri: ((object.attributes as any)[prop])} : require("@/assets/images/notfound.png")
 }
 

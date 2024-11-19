@@ -12,7 +12,6 @@ const fetchStyles = StyleSheet.create({
   },
   navButton: {
     flex: 1,
-    backgroundColor: "#1a1a1a",
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
@@ -20,7 +19,6 @@ const fetchStyles = StyleSheet.create({
   },
   navPage: {
     color: "white",
-    backgroundColor: "#1a1a1a",
     borderRadius: 10,
     flex: 1,
     fontSize: 16
@@ -43,7 +41,6 @@ const fetchStyles = StyleSheet.create({
     color: "#6a6a6a"
   },
   input: {
-    backgroundColor: "#1a1a1a",
     height: 40,
     flex: 99,
     color: "white",
@@ -59,7 +56,6 @@ const fetchStyles = StyleSheet.create({
     overflow: "hidden"
   },
   inputGroupButton: {
-    backgroundColor: "#1a1a1a",
     height: 40,
     width: 45,
     color: "white",
@@ -68,7 +64,6 @@ const fetchStyles = StyleSheet.create({
     alignItems: "center"
   },
   inputButton: {
-    backgroundColor: "#1a1a1a",
     height: 40,
     width: 50,
     color: "white",
@@ -92,18 +87,6 @@ const fetchStyles = StyleSheet.create({
     padding: 5,
     paddingBottom: 15,
     borderRadius: 10
-  },
-  cardWithBorder: {
-    flex: 1,
-    flexDirection: "row",
-    gap: 15,
-    padding: 5,
-    paddingBottom: 15,
-    borderRadius: 10,
-    backgroundColor: "#000000ee"  // RGBA? Nice!
-  },
-  cardBorder: {
-    borderRadius: 10,
   },
   cardInside: {
     // paddingHorizontal: 10,

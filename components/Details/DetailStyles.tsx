@@ -24,17 +24,17 @@ const detailStyles = StyleSheet.create({
     paddingHorizontal: 5
   },
   card: {
-    borderRadius: 10,
     paddingTop: 15,
     paddingHorizontal: 15,
     paddingBottom: 15,
     marginBottom: 5,
-    marginTop: 10
+    marginTop: 10,
+    borderRadius: 10
   },
   cardBackground: {
-    borderRadius: 10,
     marginBottom: 5,
-    marginTop: 10
+    marginTop: 10,
+    borderRadius: 10
   },
   cardInline: {
     display: "flex",

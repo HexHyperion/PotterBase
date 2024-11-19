@@ -10,8 +10,8 @@ const Stack = createStackNavigator()
 
 export default function NestedNavigator({category}: {category: Category}) {
   const theme = useContext(ThemeContext).theme
-  const background = themes[theme as Theme].background
-  const darkBackground = themes[theme as Theme].darkBackground
+  const background = themes[theme].background
+  const darkBackground = themes[theme].darkBackground
 
   return (
     <Stack.Navigator>
