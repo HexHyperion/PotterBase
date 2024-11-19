@@ -45,6 +45,12 @@ export function extractColors(description: string): string[] {
       dividedWord.filter((divided: string) => webColors.includes(divided)).forEach((divided: string) => {
         colors.add(divided)
       })
+
+      // A small exception because a few spells have "light: 'golden'"
+      if (singleWord == "golden") {
+        colors.add("gold")
+        colors.add("orange")          // because CSS gold looks stupidly yellow
+      }
     }
   })
   return [...colors]

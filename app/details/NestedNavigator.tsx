@@ -1,9 +1,9 @@
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack"
 import FetchingList from "@/components/FetchingList/FetchingList"
-import Details from "@/app/Details"
+import Details from "@/app/details/Details"
 import { Category, Theme } from "@/constants/Types"
 import { useContext } from "react"
-import { ThemeContext } from "./ThemeContext"
+import { ThemeContext } from "@/components/ThemeContext"
 import { themes } from "@/constants/Themes"
 
 const Stack = createStackNavigator()
@@ -24,7 +24,7 @@ export default function NestedNavigator({category}: {category: Category}) {
           headerTintColor: "white",
           headerStyle: {backgroundColor: background},
           headerTitleStyle: {fontFamily: "HarryP", fontSize: 40},
-          cardStyle: {backgroundColor: darkBackground},
+          cardStyle: {backgroundColor: background},
           headerShadowVisible: false
         }}
       />
@@ -35,7 +35,7 @@ export default function NestedNavigator({category}: {category: Category}) {
           presentation: "transparentModal",
           headerStyle: {backgroundColor: background},
           headerTitleStyle: {fontFamily: "HarryP", fontSize: 26},
-          cardStyle: {backgroundColor: `${darkBackground}fa`},
+          cardStyle: {backgroundColor: `${background}fa`},
           headerTintColor: "white",
           headerShadowVisible: false,
           ...TransitionPresets.RevealFromBottomAndroid

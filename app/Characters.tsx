@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack"
-import NestedNavigator from "@/components/NestedNavigator"
+import NestedNavigator from "@/app/details/NestedNavigator"
 
 const Stack = createStackNavigator()
 
