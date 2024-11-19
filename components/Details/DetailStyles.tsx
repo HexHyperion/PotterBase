@@ -24,16 +24,17 @@ const detailStyles = StyleSheet.create({
     paddingHorizontal: 5
   },
   card: {
-    backgroundColor: "#1a1a1a",
     borderRadius: 10,
     paddingTop: 15,
     paddingHorizontal: 15,
     paddingBottom: 15,
-    marginBottom: 5
+    marginBottom: 5,
+    marginTop: 10
   },
   cardBackground: {
     borderRadius: 10,
-    marginBottom: 5
+    marginBottom: 5,
+    marginTop: 10
   },
   cardInline: {
     display: "flex",
@@ -42,10 +43,11 @@ const detailStyles = StyleSheet.create({
     // backgroundColor: "red"
   },
   cardDimmer: {
-    backgroundColor: "#000000aa",
+    // backgroundColor: "#000000aa",
     paddingTop: 15,
     paddingHorizontal: 15,
-    paddingBottom: 15
+    paddingBottom: 15,
+    borderRadius: 10
   },
   cardOutside: {
     paddingHorizontal: 15,

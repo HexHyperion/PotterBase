@@ -1,7 +1,7 @@
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack"
 import FetchingList from "@/components/FetchingList/FetchingList"
 import Details from "@/app/Details"
-import { Category } from "@/constants/Types"
+import { Category, Theme } from "@/constants/Types"
 import { useContext } from "react"
 import { ThemeContext } from "./ThemeContext"
 import { themes } from "@/constants/Themes"
@@ -9,6 +9,10 @@ import { themes } from "@/constants/Themes"
 const Stack = createStackNavigator()
 
 export default function NestedNavigator({category}: {category: Category}) {
+  const theme = useContext(ThemeContext).theme
+  const background = themes[theme as Theme].background
+  const darkBackground = themes[theme as Theme].darkBackground
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -18,9 +22,9 @@ export default function NestedNavigator({category}: {category: Category}) {
         options={{
           headerTitle: category,
           headerTintColor: "white",
-          headerStyle: {backgroundColor: "black"},
+          headerStyle: {backgroundColor: background},
           headerTitleStyle: {fontFamily: "HarryP", fontSize: 40},
-          cardStyle: {backgroundColor: "black"},
+          cardStyle: {backgroundColor: darkBackground},
           headerShadowVisible: false
         }}
       />
@@ -29,9 +33,9 @@ export default function NestedNavigator({category}: {category: Category}) {
         component={Details}
         options={{
           presentation: "transparentModal",
-          headerStyle: {backgroundColor: "black"},
+          headerStyle: {backgroundColor: background},
           headerTitleStyle: {fontFamily: "HarryP", fontSize: 26},
-          cardStyle: {backgroundColor: "rgba(0,0,0,0.95)"},
+          cardStyle: {backgroundColor: `${darkBackground}fa`},
           headerTintColor: "white",
           headerShadowVisible: false,
           ...TransitionPresets.RevealFromBottomAndroid

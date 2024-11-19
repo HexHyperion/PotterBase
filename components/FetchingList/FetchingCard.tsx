@@ -57,37 +57,29 @@ export default function FetchingCard({item}: {item: PotterObject}) {
       )
     }
     case "potion": {
-      const background = extractColors(item.attributes.characteristics ?? "")
-      const gradient = background.length >= 2 ? background : (background.length == 1 ? [...background, ...background] : ["transparent", "transparent"])
       return (
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} style={fetchStyles.cardBorder} colors={gradient}>
-          <View style={fetchStyles.cardWithBorder}>
-            <View style={[fetchStyles.potionImageView, fetchStyles.imageView]}>
-              <Image style={[fetchStyles.potionImage, fetchStyles.image]} source={getImage(item, "image")}/>
-            </View>
-            <View style={fetchStyles.cardInside}>
-              <Text style={fetchStyles.header}>{item.attributes.name}</Text>
-              <DetailList object={item} labels={["", "Difficulty", "", "Characteristics", "", "Effect"]} collapsibles={[]}/>
-            </View>
+        <View style={fetchStyles.card}>
+          <View style={[fetchStyles.potionImageView, fetchStyles.imageView]}>
+            <Image style={[fetchStyles.potionImage, fetchStyles.image]} source={getImage(item, "image")}/>
           </View>
-        </LinearGradient>
+          <View style={fetchStyles.cardInside}>
+            <Text style={fetchStyles.header}>{item.attributes.name}</Text>
+            <DetailList object={item} labels={["", "Difficulty", "", "Characteristics", "", "Effect"]} collapsibles={[]}/>
+          </View>
+        </View>
       )
     }
     case "spell": {
-      const background = extractColors(item.attributes.light ?? "")
-      const gradient = background.length >= 2 ? background : (background.length == 1 ? [...background, ...background] : ["transparent", "transparent"])
       return (
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} style={fetchStyles.cardBorder} colors={gradient}>
-          <View style={fetchStyles.cardWithBorder}>
-            <View style={[fetchStyles.spellImageView, fetchStyles.imageView]}>
-              <Image style={[fetchStyles.spellImage, fetchStyles.image]} source={getImage(item, "image")}/>
-            </View>
-            <View style={fetchStyles.cardInside}>
-              <Text style={fetchStyles.header}>{item.attributes.name}</Text>
-              <DetailList object={item} labels={["", "Category", "", "Effect", "", "Light"]} collapsibles={[]}/>
-            </View>
+        <View style={fetchStyles.card}>
+          <View style={[fetchStyles.spellImageView, fetchStyles.imageView]}>
+            <Image style={[fetchStyles.spellImage, fetchStyles.image]} source={getImage(item, "image")}/>
           </View>
-        </LinearGradient>
+          <View style={fetchStyles.cardInside}>
+            <Text style={fetchStyles.header}>{item.attributes.name}</Text>
+            <DetailList object={item} labels={["", "Category", "", "Effect", "", "Light"]} collapsibles={[]}/>
+          </View>
+        </View>
       )
     }
     default: {

@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Text, Image, StatusBar, ColorValue } from "react-native";
 import Home from "./Home";
 import Books from "./Books";
@@ -15,69 +15,83 @@ import SystemNavigationBar from "react-native-system-navigation-bar"
 
 const Tab = createBottomTabNavigator();
 
+const navColor = async (color: string) => {
+  const result = await SystemNavigationBar.setNavigationColor(color, "light")
+}
+
 export default function RootStack() {
 
-  const theme = useContext(ThemeContext).theme
+  const [theme, setTheme] = useState<Theme>("neutral");  // CHANGE IT LATER TO USE ASYNCMEMORY!!!
+  const value = {theme, setTheme}
   const accentColor = themes[theme as Theme].color
   const background = themes[theme as Theme].background
+  const darkBackground = themes[theme as Theme].darkBackground
+  const accent = themes[theme as Theme].accent
+
+  navColor(background)
 
   StatusBar.setBarStyle('light-content')
   StatusBar.setBackgroundColor(background)
 
   return (
-    <Tab.Navigator sceneContainerStyle={{backgroundColor: "black"}} screenOptions={{
-      headerShown: false,
-      tabBarStyle: {
-        backgroundColor: background,
-        borderColor: "#2a2a2a",
-        height: 64,
-        paddingTop: 8,
-        paddingBottom: 4
-      }
-    }}>
-      <Tab.Screen name="Home" component={Home} options={{
-        tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Home"),
-        tabBarIcon: ({size, focused}) => {
-          size *= 1.2
-          return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "home")}/>
+    // I'M LITERALLY CRYING RN
+    // For three f-ing hours I searched why this stupid theme context doesn't work
+    // And guess what - BECAUSE IT WAS IN INDEX AND NOT HERE, AND FOR SOME REASON EVEN LOGS DON'T WORK IN INDEX :(((
+    <ThemeContext.Provider value={value}>
+      <Tab.Navigator sceneContainerStyle={{backgroundColor: darkBackground}} screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: background,
+          borderColor: accent,
+          height: 70,
+          paddingTop: 12,
+          paddingBottom: 8
         }
-      }}/>
-      <Tab.Screen name="Books" component={Books} options={{
-        tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Books"),
-        tabBarIcon: ({size, focused}) => {
-          size *= 1.1
-          return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "books")}/>
-        }
-      }}/>
-      <Tab.Screen name="Movies" component={Movies} options={{
-        tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Movies"),
-        tabBarIcon: ({size, focused}) => {
-          size *= 1.1
-          return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "movies")}/>
-        }
-      }}/>
-      <Tab.Screen name="Characters" component={Characters} options={{
-        tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Characters"),
-        tabBarIcon: ({size, focused}) => {
-          size *= 1.1
-          return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "characters")}/>
-        }
-      }}/>
-      <Tab.Screen name="Potions" component={Potions} options={{
-        tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Potions"),
-        tabBarIcon: ({size, focused}) => {
-          size *= 1.1
-          return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "potions")}/>
-        }
-      }}/>
-      <Tab.Screen name="Spells" component={Spells} options={{
-        tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Spells"),
-        tabBarIcon: ({size, focused}) => {
-          size *= 1.1
-          return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "spells")}/>
-        }
-      }}/>
-    </Tab.Navigator>
+      }}>
+        <Tab.Screen name="Home" component={Home} options={{
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Home"),
+          tabBarIcon: ({size, focused}) => {
+            size *= 1.2
+            return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "home")}/>
+          }
+        }}/>
+        <Tab.Screen name="Books" component={Books} options={{
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Books"),
+          tabBarIcon: ({size, focused}) => {
+            size *= 1.1
+            return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "books")}/>
+          }
+        }}/>
+        <Tab.Screen name="Movies" component={Movies} options={{
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Movies"),
+          tabBarIcon: ({size, focused}) => {
+            size *= 1.1
+            return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "movies")}/>
+          }
+        }}/>
+        <Tab.Screen name="Characters" component={Characters} options={{
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Characters"),
+          tabBarIcon: ({size, focused}) => {
+            size *= 1.1
+            return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "characters")}/>
+          }
+        }}/>
+        <Tab.Screen name="Potions" component={Potions} options={{
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Potions"),
+          tabBarIcon: ({size, focused}) => {
+            size *= 1.1
+            return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "potions")}/>
+          }
+        }}/>
+        <Tab.Screen name="Spells" component={Spells} options={{
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Spells"),
+          tabBarIcon: ({size, focused}) => {
+            size *= 1.1
+            return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme as Theme, "spells")}/>
+          }
+        }}/>
+      </Tab.Navigator>
+    </ThemeContext.Provider>
   )
 }
 

@@ -26,37 +26,43 @@ export const themes = {
   neutral: {
     color: "white",
     background: "black",
-    accent: "white",
-    gradient: ["#1a1a1a", "#1a1a1a"]
+    darkBackground: "black",
+    accent: "#2a2a2a",
+    gradient: []
   },
   gryffindor: {
     color: "#ff241c",
-    background: "#2f0d0d",
-    accent: "#d1812c",
+    background: "#1a0000",
+    darkBackground: "#130000",
+    accent: "#ba8200",
     gradient: ["#ff241c", "#d1812c"]
   },
   slytherin: {
     color: "#05dc00",
-    background: "#0b270b",
-    accent: "#d6ffd2",
+    background: "#001000",
+    darkBackground: "#000a00",
+    accent: "#818681",
     gradient: ["#05dc00", "#d6ffd2"]
   },
   ravenclaw: {
     color: "#00b2ff",
-    background: "#002230",
+    background: "#000e14",
+    darkBackground: "#00090d",
     accent: "#d7d6dd",
     gradient: ["#00b2ff", "#d7d6dd"]
   },
   hufflepuff: {
     color: "#ffd90d",
-    background: "#26240e",
+    background: "#131000",
+    darkBackground: "#0d0900",
     accent: "#fafbe3",
     gradient: ["#ffd90d", "#fafbe3"]
   },
   disabled: {
     color: "#949494",
     background: "gray",
+    darkBackground: "black",
     accent: "#949494",
-    gradient: ["transparent", "transparent"]
+    gradient: []
   }
 }

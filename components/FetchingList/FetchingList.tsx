@@ -23,6 +23,9 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
   const theme = useContext(ThemeContext).theme
   const route = useRoute()
+  const accent = themes[theme as Theme].accent
+  const background = themes[theme as Theme].background
+  const darkBackground = themes[theme as Theme].darkBackground
 
   try {
     const path = (route.params as NestedNavigationParams).path
@@ -71,7 +74,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
       }
 
       return (
-        <TouchableOpacity activeOpacity={0.85} style={fetchStyles.button} onPress={handlePress}>
+        <TouchableOpacity activeOpacity={0.85} style={[fetchStyles.button, {backgroundColor: background, borderColor: accent, borderWidth: 0.5}]} onPress={handlePress}>
           <FetchingCard item={item}/>
         </TouchableOpacity>
       )
@@ -132,10 +135,10 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
     return (
       <>
-        {loading && <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}><Text style={{color: "white"}}>Loading...</Text></View>}
+        {loading && <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: darkBackground}}><Text style={{color: "white"}}>Loading...</Text></View>}
         {!loading && (data.data && data.data.length > 0 ? (
           <>
-            <View style={fetchStyles.inputWrapper}>
+            <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
               <View style={fetchStyles.inputGroup}>
                 <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input}></TextInput>
                 <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.bolt : images.neutral.buttons.bolt} style={{height: 25, width: 30}}/></TouchableOpacity>
@@ -143,7 +146,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
               <TouchableOpacity activeOpacity={0.85} style={fetchStyles.inputButton} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
             </View>
             <FlatList
-              style={fetchStyles.list}
+              style={{backgroundColor: darkBackground}}
               data={data.data as ArrayLike<PotterObject>}
               renderItem={renderItem}
               keyExtractor={(item) => item.id.toString()}
@@ -153,7 +156,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
           </>
         ) : (
           <>
-            <View style={fetchStyles.inputWrapper}>
+            <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
               <View style={fetchStyles.inputGroup}>
                 <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" style={fetchStyles.input}></TextInput>
                 <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.bolt : images.neutral.buttons.bolt} style={{height: 25, width: 30}}/></TouchableOpacity>

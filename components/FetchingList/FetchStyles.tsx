@@ -1,11 +1,7 @@
 import { StyleSheet } from "react-native"
 
 const fetchStyles = StyleSheet.create({
-  list: {
-    backgroundColor: "black"
-  },
   button: {
-    backgroundColor: "#1a1a1a",
     margin: 5,
     borderRadius: 10
   },
@@ -55,7 +51,6 @@ const fetchStyles = StyleSheet.create({
     fontFamily: "Lato-Regular"
   },
   inputGroup: {
-    backgroundColor: "#1a1a1a",
     height: 40,
     flex: 99,
     borderRadius: 10,
@@ -105,7 +100,7 @@ const fetchStyles = StyleSheet.create({
     padding: 5,
     paddingBottom: 15,
     borderRadius: 10,
-    backgroundColor: "#1a1a1aee"  // RGBA? Nice!
+    backgroundColor: "#000000ee"  // RGBA? Nice!
   },
   cardBorder: {
     borderRadius: 10,

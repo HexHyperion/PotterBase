@@ -16,12 +16,13 @@ import { ThemeContext } from "@/components/ThemeContext";
 export default function Details({navigation, route}: {navigation: any, route: any}) {
   const object = route.params.object as PotterObject
   const theme = useContext(ThemeContext).theme
+  const background = themes[theme as Theme].background
 
   switch (object.type){
     case "book": {
       return (
         <ScrollView style={detailStyles.wrapper}>
-          <View style={detailStyles.card}>
+          <View style={[detailStyles.card, {backgroundColor: background}]}>
             <View style={detailStyles.cardInline}>
               <Image source={getImage(object, "cover")}
                 style={{
@@ -49,7 +50,7 @@ export default function Details({navigation, route}: {navigation: any, route: an
     case "movie": {
       return (
         <ScrollView style={detailStyles.wrapper}>
-          <View style={detailStyles.card}>
+          <View style={[detailStyles.card, {backgroundColor: background}]}>
             <View style={detailStyles.cardInline}>
               <View style={{
                 height: 200,
@@ -82,7 +83,9 @@ export default function Details({navigation, route}: {navigation: any, route: an
       )
     }
     case "character": {
-      const gradient = themes[((object.attributes.house != "Unknown" ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient
+      // TEMPORARY
+      const gradient = (themes[((object.attributes.house != "Unknown" ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient).length >= 2 ? themes[((object.attributes.house != "Unknown" ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient : [background, background]
+
       return (
         <ScrollView style={detailStyles.wrapper}>
           <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={gradient} style={detailStyles.cardBackground}>
@@ -111,8 +114,8 @@ export default function Details({navigation, route}: {navigation: any, route: an
       )
     }
     case "potion": {
-      const background = extractColors(object.attributes.characteristics ?? "")
-      const gradient = background.length >= 2 ? background : (background.length == 1 ? [...background, ...background] : ["#1a1a1a", "#1a1a1a"])
+      const backgroundGradient = extractColors(object.attributes.characteristics ?? "")
+      const gradient = backgroundGradient.length >= 2 ? backgroundGradient : (backgroundGradient.length == 1 ? [...backgroundGradient, ...backgroundGradient] : [background, background])
       return (
         <ScrollView style={detailStyles.wrapper}>
           <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={gradient} style={detailStyles.cardBackground}>
@@ -142,8 +145,8 @@ export default function Details({navigation, route}: {navigation: any, route: an
       )
     }
     case "spell": {
-      const background = extractColors(object.attributes.light ?? "")
-      const gradient = background.length >= 2 ? background : (background.length == 1 ? [...background, ...background] : ["#1a1a1a", "#1a1a1a"])
+      const backgroundGradient = extractColors(object.attributes.light ?? "")
+      const gradient = backgroundGradient.length >= 2 ? backgroundGradient : (backgroundGradient.length == 1 ? [...backgroundGradient, ...backgroundGradient] : [background, background])
       return (
         <ScrollView style={detailStyles.wrapper}>
           <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={gradient} style={detailStyles.cardBackground}>
