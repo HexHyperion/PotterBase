@@ -9,9 +9,18 @@ const fetchStyles = StyleSheet.create({
   header: {
     color: "white",
     fontSize: 22,
+    lineHeight: 26,
+    paddingTop: 5,
     fontFamily: "Grenze-Regular"
   },
   navButton: {
+    flex: 2,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40
+  },
+  smallNavButton: {
     flex: 1,
     borderRadius: 10,
     alignItems: "center",
@@ -20,14 +29,17 @@ const fetchStyles = StyleSheet.create({
   },
   navPage: {
     color: "white",
-    borderRadius: 10,
     flex: 1,
-    fontSize: 16
+    borderRadius: 10,
+    fontSize: 24,
+    paddingBottom: 3,
+    height: 40,
+    width: 60
   },
   nav: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     paddingVertical: 5,
     paddingHorizontal: 10,
     gap: 10
@@ -64,7 +76,7 @@ const fetchStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  inputButton: {
+  inputFilter: {
     height: 40,
     width: 50,
     color: "white",

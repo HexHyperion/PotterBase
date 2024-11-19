@@ -18,7 +18,7 @@ export default function NestedNavigator({category}: {category: Category}) {
       <Stack.Screen
         name="FetchingList"
         component={FetchingList}
-        initialParams={{path: category.toLowerCase()}}
+        initialParams={{path: category.toLowerCase(), update: true}}
         options={{
           headerTitle: category,
           headerTintColor: "white",

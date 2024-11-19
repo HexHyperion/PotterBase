@@ -14,7 +14,11 @@ const images = {
     },
     buttons: {
       sorting: require(`@/assets/images/theme/neutral/sorting.png`),
-      bolt: require(`@/assets/images/theme/neutral/bolt.png`)
+      bolt: require(`@/assets/images/theme/neutral/bolt.png`),
+      wands: require(`@/assets/images/theme/neutral/wands.png`),
+      broom: require(`@/assets/images/theme/neutral/broom.png`),
+      car: require(`@/assets/images/theme/neutral/car.png`),
+      train: require(`@/assets/images/theme/neutral/train.png`)
     }
   },
   gryffindor: {
@@ -30,7 +34,11 @@ const images = {
     },
     buttons: {
       sorting: require(`@/assets/images/theme/gryffindor/sorting.png`),
-      bolt: require(`@/assets/images/theme/gryffindor/bolt.png`)
+      bolt: require(`@/assets/images/theme/gryffindor/bolt.png`),
+      wands: require(`@/assets/images/theme/gryffindor/wands.png`),
+      broom: require(`@/assets/images/theme/gryffindor/broom.png`),
+      car: require(`@/assets/images/theme/gryffindor/car.png`),
+      train: require(`@/assets/images/theme/gryffindor/train.png`)
     }
   },
   slytherin: {
@@ -46,7 +54,11 @@ const images = {
     },
     buttons: {
       sorting: require(`@/assets/images/theme/slytherin/sorting.png`),
-      bolt: require(`@/assets/images/theme/slytherin/bolt.png`)
+      bolt: require(`@/assets/images/theme/slytherin/bolt.png`),
+      wands: require(`@/assets/images/theme/slytherin/wands.png`),
+      broom: require(`@/assets/images/theme/slytherin/broom.png`),
+      car: require(`@/assets/images/theme/slytherin/car.png`),
+      train: require(`@/assets/images/theme/slytherin/train.png`)
     }
   },
   ravenclaw: {
@@ -62,7 +74,11 @@ const images = {
     },
     buttons: {
       sorting: require(`@/assets/images/theme/ravenclaw/sorting.png`),
-      bolt: require(`@/assets/images/theme/ravenclaw/bolt.png`)
+      bolt: require(`@/assets/images/theme/ravenclaw/bolt.png`),
+      wands: require(`@/assets/images/theme/ravenclaw/wands.png`),
+      broom: require(`@/assets/images/theme/ravenclaw/broom.png`),
+      car: require(`@/assets/images/theme/ravenclaw/car.png`),
+      train: require(`@/assets/images/theme/ravenclaw/train.png`)
     }
   },
   hufflepuff: {
@@ -78,7 +94,11 @@ const images = {
     },
     buttons: {
       sorting: require(`@/assets/images/theme/hufflepuff/sorting.png`),
-      bolt: require(`@/assets/images/theme/hufflepuff/bolt.png`)
+      bolt: require(`@/assets/images/theme/hufflepuff/bolt.png`),
+      wands: require(`@/assets/images/theme/hufflepuff/wands.png`),
+      broom: require(`@/assets/images/theme/hufflepuff/broom.png`),
+      car: require(`@/assets/images/theme/hufflepuff/car.png`),
+      train: require(`@/assets/images/theme/hufflepuff/train.png`)
     }
   },
   disabled: {
@@ -94,7 +114,11 @@ const images = {
     },
     buttons: {
       sorting: require(`@/assets/images/theme/disabled/sorting.png`),
-      bolt: require(`@/assets/images/theme/disabled/bolt.png`)
+      bolt: require(`@/assets/images/theme/disabled/bolt.png`),
+      wands: require(`@/assets/images/theme/disabled/wands.png`),
+      broom: require(`@/assets/images/theme/disabled/broom.png`),
+      car: require(`@/assets/images/theme/disabled/car.png`),
+      train: require(`@/assets/images/theme/disabled/train.png`)
     }
   }
 };

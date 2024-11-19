@@ -68,7 +68,7 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 		<ScrollView style={detailStyles.wrapper}>
 
 			{/* Background for the entire card */}
-			<LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={dimGradient ? gradient : [background, background]} style={[detailStyles.cardWrapper, {backgroundColor: houseColor != "" ? houseColor : "transparent"}]}>
+			<LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={dimGradient ? gradient : (houseColor != "" ? ["transparent", "transparent"] : [background, background])} style={[detailStyles.cardWrapper, {backgroundColor: houseColor != "" ? houseColor : "transparent"}]}>
 
 				{/* Heavy dimmer for the whole card */}
 				<View style={{borderRadius: 9, overflow: "hidden", backgroundColor: dimGradient ? "#000000e0" : "transparent"}}>

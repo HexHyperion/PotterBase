@@ -4,7 +4,7 @@ export type Category = "Books" | "Movies" | "Characters" | "Potions" | "Spells"
 
 export type Link = "current" | "first" | "prev" | "next" | "last"
 
-export type NestedNavigationParams = { path: string }
+export type NestedNavigationParams = { path: string, update: boolean }
 
 export type HeaderPropName = "title" | "name"
 export type ImagePropName = "cover" | "poster" | "image"

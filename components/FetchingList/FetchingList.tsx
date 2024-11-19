@@ -26,6 +26,8 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
   try {
     const path = (route.params as NestedNavigationParams).path
+    const update = (route.params as NestedNavigationParams).update
+    if (update) currentQuery = ""
 
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<FetchedData>({} as FetchedData)
@@ -107,17 +109,64 @@ export default function FetchingList({navigation}: {navigation: any}) {
     }
 
     // Navigation between pages - first, previous, exact, next and last
-    // TODO disable inactive buttons
+    // So small, yet so big...
     const FetchingNavigation = () => {
-      if ((data.meta.pagination.last && data.meta.pagination.last > 1) || data.meta.pagination.current > 1) return (
-        <View style={fetchStyles.nav}>
-        <TouchableHighlight style={[fetchStyles.navButton, {backgroundColor: lightBackground}]} onPress={() => handlePage("first")}><Text style={fetchStyles.text}>&lt;&lt;</Text></TouchableHighlight>
-        <TouchableHighlight style={[fetchStyles.navButton, {backgroundColor: lightBackground}]} onPress={() => handlePage("prev")}><Text style={fetchStyles.text}>&lt;</Text></TouchableHighlight>
-        <TextInput defaultValue="" textAlign="center" onSubmitEditing={handleExactPage} style={[fetchStyles.navPage, {backgroundColor: lightBackground}]} placeholderTextColor="white" placeholder={((data.meta as any).pagination.current as Double).toString()}></TextInput>
-        <TouchableHighlight style={[fetchStyles.navButton, {backgroundColor: lightBackground}]} onPress={() => handlePage("next")}><Text style={fetchStyles.text}>&gt;</Text></TouchableHighlight>
-        <TouchableHighlight style={[fetchStyles.navButton, {backgroundColor: lightBackground}]} onPress={() => handlePage("last")}><Text style={fetchStyles.text}>&gt;&gt;</Text></TouchableHighlight>
-      </View>
-      )
+      if ((data.meta.pagination.last && data.meta.pagination.last > 1) || data.meta.pagination.current > 1) {
+        return (
+          <View style={fetchStyles.nav}>
+
+            {/* First page */}
+            <TouchableOpacity activeOpacity={0.75}
+              disabled={!(data.meta as any).pagination.first}
+              style={[fetchStyles.smallNavButton, {backgroundColor: lightBackground}]}
+              onPress={() => handlePage("first")}>
+              <Image
+                source={(data.meta as any).pagination.first ? images.neutral.buttons.car : images.disabled.buttons.car}
+                style={{height: 30, width: 100, objectFit: "contain", transform: [{scaleX: -1}]}}
+              />
+            </TouchableOpacity>
+
+            {/* Previous page */}
+            <TouchableOpacity activeOpacity={0.75}
+              disabled={!(data.meta as any).pagination.first}
+              style={[fetchStyles.navButton, {backgroundColor: lightBackground}]}
+              onPress={() => handlePage("prev")}>
+              <Image
+                source={(data.meta as any).pagination.first ? images.neutral.buttons.broom : images.disabled.buttons.broom}
+                style={{height: 30, width: 100, objectFit: "contain", transform: [{scaleX: -1}]}}
+              />
+            </TouchableOpacity>
+
+            {/* Exact page number */}
+            <TextInput defaultValue="" textAlign="center" onSubmitEditing={handleExactPage} placeholderTextColor="white"
+              style={[fetchStyles.navPage, {backgroundColor: lightBackground, fontFamily: "Grenze-Regular"}]}
+              placeholder={((data.meta as any).pagination.current as Double).toString()}
+            />
+
+            {/* Next page */}
+            <TouchableOpacity activeOpacity={0.75}
+              disabled={!(data.meta as any).pagination.last}
+              style={[fetchStyles.navButton, {backgroundColor: lightBackground}]}
+              onPress={() => handlePage("next")}>
+              <Image
+                source={(data.meta as any).pagination.last ? images.neutral.buttons.broom : images.disabled.buttons.broom}
+                style={{height: 30, width: 100, objectFit: "contain"}}
+              />
+            </TouchableOpacity>
+
+            {/* Last page */}
+            <TouchableOpacity activeOpacity={0.75}
+              disabled={!(data.meta as any).pagination.last}
+              style={[fetchStyles.smallNavButton, {backgroundColor: lightBackground}]}
+              onPress={() => handlePage("last")}>
+              <Image
+                source={(data.meta as any).pagination.last ? images.neutral.buttons.car : images.disabled.buttons.car}
+                style={{height: 30, width: 100, objectFit: "contain"}}
+              />
+            </TouchableOpacity>
+          </View>
+        )
+      }
       else return null
     }
 
@@ -129,9 +178,9 @@ export default function FetchingList({navigation}: {navigation: any}) {
             <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
               <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
                 <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input}></TextInput>
-                <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.bolt : images.neutral.buttons.bolt} style={{height: 25, width: 30}}/></TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.wands : images.neutral.buttons.wands} style={{height: 15, width: 15}}/></TouchableOpacity>
               </View>
-              <TouchableOpacity activeOpacity={0.85} style={[fetchStyles.inputButton, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
             </View>
             <FlatList
               style={{backgroundColor: background}}
@@ -147,9 +196,9 @@ export default function FetchingList({navigation}: {navigation: any}) {
             <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
               <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
                 <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" style={fetchStyles.input}></TextInput>
-                <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.bolt : images.neutral.buttons.bolt} style={{height: 25, width: 30}}/></TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.wands : images.neutral.buttons.wands} style={{height: 15, width: 15}}/></TouchableOpacity>
               </View>
-              <TouchableOpacity activeOpacity={0.85} style={[fetchStyles.inputButton, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
             </View>
             <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
               <Text style={fetchStyles.header}>No records found!</Text>

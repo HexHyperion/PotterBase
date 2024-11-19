@@ -44,6 +44,13 @@ export function extractColors(description: string): string[] {
         colors.add(divided)
       })
 
+      // e.g. blue/green -> [blue, green]
+      singleWord.split("/").forEach((divided: string) => {
+        if (webColors.includes(divided)) {
+          colors.add(divided)
+        }
+      })
+
       // A small exception because a few spells have "light: 'golden'"
       if (singleWord == "golden") {
         colors.add("gold")
