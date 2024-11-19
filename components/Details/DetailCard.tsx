@@ -1,4 +1,4 @@
-import { fieldNames, PotterObject, Theme } from "@/constants/Types";
+import { fieldNames, houses, PotterObject, Theme } from "@/constants/Types";
 import { ScrollView, View, Image, Text, ImageBackground } from "react-native";
 import Space from "../Space";
 import { getImage, getData, getHouseColor } from "./DetailFunctions";
@@ -15,7 +15,6 @@ export function DetailCard({object, labelsInline, labelsInside, labelsOutside, c
 	const lightBackground = themes[theme].lightBackground
 	const background = themes[theme].background
 	const darkBackground = themes[theme].darkBackground
-	const accent = themes[theme].accent
 
 	return (
 		<ScrollView style={detailStyles.wrapper}>
@@ -54,15 +53,15 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 	const background = themes[theme].background
 	const darkBackground = themes[theme].darkBackground
 	const attributes = object.attributes as any
-	let accent = themes[theme].accent
 	let dimGradient = false
 	let houseColor = ""
 
 	if (object.type == "character") {
-		accent = themes[(object.attributes.house as Theme ?? "neutral").toLowerCase() as Theme].accent
 		houseColor = getHouseColor(object)
 	}
 	else if (!gradient.includes(lightBackground)) dimGradient = true
+
+	console.log(theme, background, houseColor);
 
 	return (
 		<ScrollView style={detailStyles.wrapper}>
@@ -77,7 +76,7 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 					<LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={gradient} style={[detailStyles.cardBackground, {backgroundColor: lightBackground}]}>
 
 						{/* If character has a house - background, otherwise transparent */}
-						<ImageBackground source={images[((attributes.house && attributes.house != "Unknown" ? attributes.house : "neutral")).toLowerCase() as Theme].background} style={{borderRadius: 10}}>
+						<ImageBackground source={images[((attributes.house && houses.includes(attributes.house) ? attributes.house : "neutral")).toLowerCase() as Theme].background} style={{borderRadius: 10}}>
 
 							{/* Light dimmer for the small card */}
 							<View style={[detailStyles.cardDimmer, {backgroundColor: dimGradient ? "#000000aa" : "transparent"}]}>

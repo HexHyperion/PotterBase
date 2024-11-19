@@ -3,8 +3,10 @@ import FetchingList from "@/components/FetchingList/FetchingList"
 import Details from "@/app/details/Details"
 import { Category, Theme } from "@/constants/Types"
 import { useContext } from "react"
+import { Image } from "react-native"
 import { ThemeContext } from "@/components/ThemeContext"
 import { themes } from "@/constants/Themes"
+import images from "@/constants/Images"
 
 const Stack = createStackNavigator()
 
@@ -18,7 +20,7 @@ export default function NestedNavigator({category}: {category: Category}) {
       <Stack.Screen
         name="FetchingList"
         component={FetchingList}
-        initialParams={{path: category.toLowerCase(), update: true}}
+        initialParams={{path: category.toLowerCase()}}
         options={{
           headerTitle: category,
           headerTintColor: "white",
@@ -34,11 +36,12 @@ export default function NestedNavigator({category}: {category: Category}) {
         options={{
           presentation: "transparentModal",
           headerStyle: {backgroundColor: background},
-          headerTitleStyle: {fontFamily: "HarryP", fontSize: 26},
+          headerTitleStyle: {fontFamily: "HarryP", fontSize: 36, paddingTop: 4},
+          headerBackImage: () => {return <Image source={images.neutral.buttons.wands} style={{height: 25, width: 25, marginLeft: 10, objectFit: "contain"}}/>},
           cardStyle: {backgroundColor: `${darkBackground}fa`},
           headerTintColor: "white",
           headerShadowVisible: false,
-          ...TransitionPresets.RevealFromBottomAndroid
+          ...TransitionPresets.ModalSlideFromBottomIOS
         }}
       />
     </Stack.Navigator>

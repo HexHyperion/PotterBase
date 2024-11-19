@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import { themes, webColors } from "@/constants/Themes";
-import { Character, Theme, PotterObject, ImagePropName } from "@/constants/Types";
+import { Character, Theme, PotterObject, ImagePropName, housesLower } from "@/constants/Types";
 import detailStyles from "./DetailStyles";
 
 
@@ -9,7 +9,7 @@ export function getHouseColor(item: Character): string {
   const house = item.attributes.house
 
   // The person who put "house: 'unknown'" in the API is a damn troll
-  if (house && ["gryffindor","slytherin","ravenclaw","hufflepuff"].includes(house.toLowerCase())) {
+  if (house && housesLower.includes(house.toLowerCase())) {
     return themes[(house as Theme).toLowerCase() as Theme].background
   }
   else return ""

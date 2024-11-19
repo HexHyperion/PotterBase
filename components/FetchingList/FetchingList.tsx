@@ -1,6 +1,6 @@
 import { FlatList, Text, View, TouchableHighlight, TouchableOpacity, Image, TextInput } from "react-native"
 import { useContext, useEffect, useState } from "react"
-import { FetchedData, Link, NestedNavigationParams, PotterObject } from "@/constants/Types"
+import { Category, FetchedData, HeaderPropName, Link, NestedNavigationParams, PotterObject } from "@/constants/Types"
 import { createStackNavigator } from "@react-navigation/stack"
 import { useRoute } from "@react-navigation/native"
 import { Theme } from "@/constants/Types"
@@ -14,6 +14,10 @@ import images from "@/constants/Images"
 const endpoint = "https://api.potterdb.com/v1/"
 const Stack = createStackNavigator()
 let currentQuery: string = ""
+let queryPage = "?page[number]=1"
+let querySearch = ""
+let queryFilters = ""
+let querySort = ""
 
 export default function FetchingList({navigation}: {navigation: any}) {
 
@@ -26,16 +30,14 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
   try {
     const path = (route.params as NestedNavigationParams).path
-    const update = (route.params as NestedNavigationParams).update
-    if (update) currentQuery = ""
 
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<FetchedData>({} as FetchedData)
 
-
     // Fetches the data from the PotterDB API (or pretty much any other REST API)
     // If an empty string is passed, returns without sending any requests
-    const fetchData = async (url: string) => {
+    const fetchData = async () => {
+      let url = endpoint + path + queryPage + querySearch + queryFilters + querySort
       if (url.trim() == "") return
       try {
         setLoading(true)
@@ -52,7 +54,14 @@ export default function FetchingList({navigation}: {navigation: any}) {
       }
     }
 
-    useEffect(() => {fetchData(endpoint + path)}, [])
+    useEffect(() => {
+      fetchData()
+      currentQuery = ""
+      querySearch = ""
+      queryFilters = ""
+      querySort = ""
+      queryPage = "?page[number]=1"
+    }, [])
 
 
     // Returns every item (card) of the FetchingList one by one
@@ -74,7 +83,8 @@ export default function FetchingList({navigation}: {navigation: any}) {
     // If the link is nonexistent passes an empty string, causing fetchData() to return without sending a new request
     const handlePage = (link: Link) => {
       if (data.links[link]) {
-        fetchData(data.links[link] ?? "")
+        queryPage = `?page[number]=${data.meta.pagination[link]}`
+        fetchData()
       }
     }
 
@@ -83,7 +93,8 @@ export default function FetchingList({navigation}: {navigation: any}) {
     // Both functions cause a new request to the API
     const handleExactPage = ({nativeEvent: {text}}: {nativeEvent: {text: any}}) => {
       if ((data.meta.pagination.first ?? 1) < text && text < (data.meta.pagination.last ?? data.meta.pagination.current)) {
-        fetchData(data.links.self.split("?page")[0] + `?page[number]=${text}`)
+        queryPage = `?page[number]=${text}`
+        fetchData()
       }
       else {
         return
@@ -93,7 +104,19 @@ export default function FetchingList({navigation}: {navigation: any}) {
     const handleSearch = ({nativeEvent: {text}}: {nativeEvent: {text: string}}) => {
       try {
         currentQuery = text
-        fetchData(endpoint + path + `?filter[title_cont]=${text.replaceAll(" ","")}&filter[name_cont]=${text.replaceAll(" ", "")}`)
+        let searchedType: HeaderPropName
+        if (data.data) {
+          if (["book", "movie"].includes(data.data[0].type)) {
+            searchedType = "title"
+          }
+          else {
+            searchedType = "name"
+          }
+
+          querySearch = `&filter[${searchedType}_cont]=${text.replaceAll(" ","")}`
+          queryPage = `?page[number]=1`
+          fetchData()
+        }
       }
       catch (err) {
         console.log(err)
@@ -104,8 +127,12 @@ export default function FetchingList({navigation}: {navigation: any}) {
     }
 
     const handleReset = () => {
-      fetchData(endpoint + path + `?page[number]=${data.meta.pagination.current}`)
       currentQuery = ""
+      queryPage = `?page[number]=1`
+      querySearch = ""
+      queryFilters = ""
+      querySort = ""
+      fetchData()
     }
 
     // Navigation between pages - first, previous, exact, next and last
@@ -138,7 +165,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
             </TouchableOpacity>
 
             {/* Exact page number */}
-            <TextInput defaultValue="" textAlign="center" onSubmitEditing={handleExactPage} placeholderTextColor="white"
+            <TextInput keyboardType="numeric" defaultValue="" textAlign="center" onSubmitEditing={handleExactPage} placeholderTextColor="white"
               style={[fetchStyles.navPage, {backgroundColor: lightBackground, fontFamily: "Grenze-Regular"}]}
               placeholder={((data.meta as any).pagination.current as Double).toString()}
             />
@@ -177,7 +204,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
           <>
             <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
               <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
-                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input}></TextInput>
+                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input} returnKeyType="search"></TextInput>
                 <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.wands : images.neutral.buttons.wands} style={{height: 15, width: 15}}/></TouchableOpacity>
               </View>
               <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
@@ -195,7 +222,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
           <>
             <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
               <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
-                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" style={fetchStyles.input}></TextInput>
+                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" style={fetchStyles.input} returnKeyType="search"></TextInput>
                 <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.wands : images.neutral.buttons.wands} style={{height: 15, width: 15}}/></TouchableOpacity>
               </View>
               <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>

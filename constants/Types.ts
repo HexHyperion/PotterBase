@@ -4,7 +4,7 @@ export type Category = "Books" | "Movies" | "Characters" | "Potions" | "Spells"
 
 export type Link = "current" | "first" | "prev" | "next" | "last"
 
-export type NestedNavigationParams = { path: string, update: boolean }
+export type NestedNavigationParams = { path: string }
 
 export type HeaderPropName = "title" | "name"
 export type ImagePropName = "cover" | "poster" | "image"
@@ -208,3 +208,6 @@ export const fieldNames = {
     spell: "name" as HeaderPropName
   }
 }
+
+export const houses = ["Gryffindor", "Slytherin", "Ravenclaw", "Hufflepuff"]
+export const housesLower = ["gryffindor", "slytherin", "ravenclaw", "hufflepuff"]
