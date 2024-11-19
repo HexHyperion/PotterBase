@@ -1,16 +1,12 @@
-import { FlatList, Text, StyleSheet, Button, View, TouchableHighlight, TouchableOpacity, Image, TextInput } from "react-native"
+import { FlatList, Text, View, TouchableHighlight, TouchableOpacity, Image, TextInput } from "react-native"
 import { useContext, useEffect, useState } from "react"
-import { Character, FetchedData, Link, NestedNavigationParams, PotterObject } from "@/constants/Types"
+import { FetchedData, Link, NestedNavigationParams, PotterObject } from "@/constants/Types"
 import { createStackNavigator } from "@react-navigation/stack"
 import { useRoute } from "@react-navigation/native"
 import { Theme } from "@/constants/Types"
 import { themes } from "@/constants/Themes"
-import { extractColors, getImage } from "@/components/Details/DetailFunctions"
-import DetailList from "@/components/Details/DetailList"
-import Space from "@/components/Space"
 import { ThemeContext } from "@/components/ThemeContext"
 import { Double } from "react-native/Libraries/Types/CodegenTypes"
-import { LinearGradient } from "react-native-linear-gradient"
 import fetchStyles from "./FetchStyles"
 import FetchingCard from "./FetchingCard"
 import images from "@/constants/Images"
@@ -95,7 +91,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
     const handleSearch = ({nativeEvent: {text}}: {nativeEvent: {text: string}}) => {
       try {
         currentQuery = text
-        fetchData(endpoint + path + `?filter[name_cont]=${text.replaceAll(" ", "")}`)
+        fetchData(endpoint + path + `?filter[title_cont]=${text.replaceAll(" ","")}&filter[name_cont]=${text.replaceAll(" ", "")}`)
       }
       catch (err) {
         console.log(err)

@@ -23,7 +23,7 @@ export default function FetchingCardTemplate({item, labels, optionalField, optio
           <>
             <Space/>
             <Text style={fetchStyles.text}>
-              <Text style={{fontFamily: "Grenze-Bold", fontSize: 16}}>{optionalField}:</Text>
+              <Text style={{fontFamily: "Grenze-Bold", fontSize: 16}}>{optionalField}: </Text>
               {(item.attributes as any)[`${optionalField.toLowerCase()}s`][optionalLast ? (item.attributes as any)[`${optionalField.toLowerCase()}s`].length-1 : 0] ?? <Text style={fetchStyles.disabled}>n/d</Text>}
             </Text>
           </>

@@ -4,17 +4,15 @@ import { Character, Theme, PotterObject, ImagePropName } from "@/constants/Types
 import detailStyles from "./DetailStyles";
 
 
-// Returns a usable (e.g. hex code) color of a given character's Hogwarts house
+// Returns a usable (e.g. hex code) color of a given character's Hogwarts house background
 export function getHouseColor(item: Character): string {
   const house = item.attributes.house
 
   // The person who put "house: 'unknown'" in the API is a damn troll
   if (house && ["gryffindor","slytherin","ravenclaw","hufflepuff"].includes(house.toLowerCase())) {
-    console.log(house, house as Theme);
-
-    return themes[(house as Theme).toLowerCase() as Theme].color
+    return themes[(house as Theme).toLowerCase() as Theme].background
   }
-  else return "#6a6a6a"
+  else return ""
 }
 
 

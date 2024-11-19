@@ -2,7 +2,8 @@ import { StyleSheet } from "react-native"
 
 const fetchStyles = StyleSheet.create({
   button: {
-    margin: 5,
+    marginHorizontal: 10,
+    marginVertical: 5,
     borderRadius: 10
   },
   header: {
@@ -28,7 +29,7 @@ const fetchStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     paddingVertical: 5,
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     gap: 10
   },
   text: {
@@ -38,7 +39,7 @@ const fetchStyles = StyleSheet.create({
     lineHeight: 20
   },
   disabled: {
-    color: "#6a6a6a"
+    color: "#8a8a8a"
   },
   input: {
     height: 40,
@@ -76,7 +77,8 @@ const fetchStyles = StyleSheet.create({
   inputWrapper: {
     display: "flex",
     flexDirection: "row",
-    padding: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     gap: 10,
     justifyContent: "space-between"
   },

@@ -2,6 +2,8 @@
 
 const images = {
   neutral: {
+    crest: require("@/assets/images/HogwartsCrest.png"),
+    background: require("@/assets/images/transparent.png"),
     navbar: {
       home: require(`@/assets/images/theme/neutral/hogwarts.png`),
       books: require(`@/assets/images/theme/neutral/pen.png`),
@@ -16,6 +18,8 @@ const images = {
     }
   },
   gryffindor: {
+    crest: require("@/assets/images/GryffindorCrest.png"),
+    background: require("@/assets/images/theme/gryffindor/background.jpg"),
     navbar: {
       home: require(`@/assets/images/theme/gryffindor/hogwarts.png`),
       books: require(`@/assets/images/theme/gryffindor/pen.png`),
@@ -30,6 +34,8 @@ const images = {
     }
   },
   slytherin: {
+    crest: require("@/assets/images/SlytherinCrest.png"),
+    background: require("@/assets/images/theme/slytherin/background.jpg"),
     navbar: {
       home: require(`@/assets/images/theme/slytherin/hogwarts.png`),
       books: require(`@/assets/images/theme/slytherin/pen.png`),
@@ -44,6 +50,8 @@ const images = {
     }
   },
   ravenclaw: {
+    crest: require("@/assets/images/RavenclawCrest.png"),
+    background: require("@/assets/images/theme/ravenclaw/background.jpg"),
     navbar: {
       home: require(`@/assets/images/theme/ravenclaw/hogwarts.png`),
       books: require(`@/assets/images/theme/ravenclaw/pen.png`),
@@ -58,6 +66,8 @@ const images = {
     }
   },
   hufflepuff: {
+    crest: require("@/assets/images/HufflepuffCrest.png"),
+    background: require("@/assets/images/theme/hufflepuff/background.jpg"),
     navbar: {
       home: require(`@/assets/images/theme/hufflepuff/hogwarts.png`),
       books: require(`@/assets/images/theme/hufflepuff/pen.png`),
@@ -72,6 +82,8 @@ const images = {
     }
   },
   disabled: {
+    crest: require("@/assets/images/notfound.png"),
+    background: require("@/assets/images/notfound.png"),
     navbar: {
       home: require(`@/assets/images/theme/disabled/hogwarts.png`),
       books: require(`@/assets/images/theme/disabled/pen.png`),

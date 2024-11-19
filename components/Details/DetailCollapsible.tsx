@@ -27,5 +27,5 @@ export default function DetailCollapsible({object, label}: {object: PotterObject
     ) : <><Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>{label}:</Text><Text style={detailStyles.text}>- {getData(object, label)}</Text></>
 
   // If there are no values display n/d
-  ) : <Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>{label}: <Text style={detailStyles.disabled}>n/d</Text></Text>
+  ) : <Text style={detailStyles.text}><Text style={{fontFamily: "Grenze-Bold", fontSize: 16}}>{label}: </Text><Text style={detailStyles.disabled}>n/d</Text></Text>
 }

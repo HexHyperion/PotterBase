@@ -22,8 +22,8 @@ export default function NestedNavigator({category}: {category: Category}) {
         options={{
           headerTitle: category,
           headerTintColor: "white",
-          headerStyle: {backgroundColor: background},
-          headerTitleStyle: {fontFamily: "HarryP", fontSize: 40},
+          headerStyle: {backgroundColor: background, height: 100},
+          headerTitleStyle: {fontFamily: "HarryP", fontSize: 40, marginTop: 10},
           cardStyle: {backgroundColor: background},
           headerShadowVisible: false
         }}
@@ -35,7 +35,7 @@ export default function NestedNavigator({category}: {category: Category}) {
           presentation: "transparentModal",
           headerStyle: {backgroundColor: background},
           headerTitleStyle: {fontFamily: "HarryP", fontSize: 26},
-          cardStyle: {backgroundColor: `${background}fa`},
+          cardStyle: {backgroundColor: `${darkBackground}fa`},
           headerTintColor: "white",
           headerShadowVisible: false,
           ...TransitionPresets.RevealFromBottomAndroid
