@@ -62,12 +62,12 @@ export default function FetchingList({navigation}: {navigation: any}) {
     // Resets everything on component load
     // Prevents passing the query to other tabs/categories
     useEffect(() => {
-      fetchData()
       currentQuery = ""
       querySearch = ""
       queryFilters = ""
       querySort = ""
       queryPage = "?page[number]=1"
+      fetchData()
     }, [])
 
 
