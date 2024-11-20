@@ -46,7 +46,6 @@ export default function FetchingList({navigation}: {navigation: any}) {
         setData(fetchedData)
       }
       catch (err) {
-        console.log("fetchData failed")
         console.error(err)
       }
       finally {
@@ -113,13 +112,13 @@ export default function FetchingList({navigation}: {navigation: any}) {
             searchedType = "name"
           }
 
-          querySearch = `&filter[${searchedType}_cont]=${text.replaceAll(" ","")}`
+          querySearch = `&filter[${searchedType}_cont]=${encodeURIComponent(text)}`
           queryPage = `?page[number]=1`
           fetchData()
         }
       }
       catch (err) {
-        console.log(err)
+        console.error(err)
       }
       finally {
         return
@@ -204,10 +203,10 @@ export default function FetchingList({navigation}: {navigation: any}) {
           <>
             <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
               <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
-                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input} returnKeyType="search"></TextInput>
+                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="#ffffff6a" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input} returnKeyType="search"></TextInput>
                 <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.wands : images.neutral.buttons.wands} style={{height: 15, width: 15}}/></TouchableOpacity>
               </View>
-              <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {navigation.navigate("Filters", {data: data})}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
             </View>
             <FlatList
               style={{backgroundColor: background}}
@@ -222,7 +221,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
           <>
             <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
               <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
-                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="white" style={fetchStyles.input} returnKeyType="search"></TextInput>
+                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="#ffffff6a" style={fetchStyles.input} returnKeyType="search"></TextInput>
                 <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.wands : images.neutral.buttons.wands} style={{height: 15, width: 15}}/></TouchableOpacity>
               </View>
               <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
@@ -237,7 +236,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
     )
   }
   catch (err) {
-    console.log(err);
+    console.error(err);
     return (
       <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
         <Text style={{color: "white", textAlign: "center"}}>Something went wrong during loading the list!</Text>

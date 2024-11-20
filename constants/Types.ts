@@ -9,6 +9,19 @@ export type NestedNavigationParams = { path: string }
 export type HeaderPropName = "title" | "name"
 export type ImagePropName = "cover" | "poster" | "image"
 
+export type FilterData = {
+  property?: string
+  condition?: string
+  value?: string
+}
+
+export type FilterCardProps = {
+  data: FetchedData
+  filter: FilterData
+  onChange: (updatedFilter: FilterData) => void
+  onDelete: () => void
+}
+
 export type PotterObject = Book | Chapter | Movie | Character | Potion | Spell
 
 export type FetchedData = {

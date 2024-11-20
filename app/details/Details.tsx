@@ -41,7 +41,6 @@ export default function Details({navigation, route}: {navigation: any, route: an
     case "character": {
       // Seriously? Moody is "Unknown", and now they give us three houses at once?!
       const gradient = (themes[((houses.includes(object.attributes.house ?? "") ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient).length >= 2 ? themes[((object.attributes.house != "Unknown" ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient : [lightBackground, lightBackground]
-      console.log(gradient);
 
       return (
         <DetailCardGradient object={object} gradient={gradient}

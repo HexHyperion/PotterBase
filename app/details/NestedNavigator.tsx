@@ -7,6 +7,7 @@ import { Image } from "react-native"
 import { ThemeContext } from "@/components/ThemeContext"
 import { themes } from "@/constants/Themes"
 import images from "@/constants/Images"
+import Filters from "./Filters"
 
 const Stack = createStackNavigator()
 
@@ -36,7 +37,21 @@ export default function NestedNavigator({category}: {category: Category}) {
         options={{
           presentation: "transparentModal",
           headerStyle: {backgroundColor: background},
-          headerTitleStyle: {fontFamily: "HarryP", fontSize: 36, paddingTop: 4},
+          headerTitleStyle: {fontFamily: "HarryP", fontSize: 36, paddingTop: 5},
+          headerBackImage: () => {return <Image source={images.neutral.buttons.wands} style={{height: 25, width: 25, marginLeft: 10, objectFit: "contain"}}/>},
+          cardStyle: {backgroundColor: `${darkBackground}fa`},
+          headerTintColor: "white",
+          headerShadowVisible: false,
+          ...TransitionPresets.ModalSlideFromBottomIOS
+        }}
+      />
+      <Stack.Screen
+        name="Filters"
+        component={Filters}
+        options={{
+          presentation: "transparentModal",
+          headerStyle: {backgroundColor: background},
+          headerTitleStyle: {fontFamily: "HarryP", fontSize: 36, paddingTop: 5},
           headerBackImage: () => {return <Image source={images.neutral.buttons.wands} style={{height: 25, width: 25, marginLeft: 10, objectFit: "contain"}}/>},
           cardStyle: {backgroundColor: `${darkBackground}fa`},
           headerTintColor: "white",

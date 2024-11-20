@@ -33,13 +33,13 @@ export function DetailCard({object, labelsInline, labelsInside, labelsOutside, c
 					{labelsInside && (
 						<>
 						<Space/>
-						<DetailList object={object} labels={labelsInside} collapsibles={[]}></DetailList>
+						<DetailList object={object} labels={labelsInside} collapsibles={[]}/>
 					</>
 					)}
 				</View>
 				{labelsOutside || collapsibles && (
 					<View style={detailStyles.cardOutside}>
-						<DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}></DetailList>
+						<DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
 					</View>
 				)}
 			</View>
@@ -60,8 +60,6 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 		houseColor = getHouseColor(object)
 	}
 	else if (!gradient.includes(lightBackground)) dimGradient = true
-
-	console.log(theme, background, houseColor);
 
 	return (
 		<ScrollView style={detailStyles.wrapper}>
@@ -92,7 +90,7 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 								{labelsInside && (
 								<>
 									<Space/>
-									<DetailList object={object} labels={labelsInside} collapsibles={[]}></DetailList>
+									<DetailList object={object} labels={labelsInside} collapsibles={[]}/>
 								</>
 								)}
 							</View>

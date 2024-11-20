@@ -18,7 +18,9 @@ const images = {
       wands: require(`@/assets/images/theme/neutral/wands.png`),
       broom: require(`@/assets/images/theme/neutral/broom.png`),
       car: require(`@/assets/images/theme/neutral/car.png`),
-      train: require(`@/assets/images/theme/neutral/train.png`)
+      train: require(`@/assets/images/theme/neutral/train.png`),
+      newspaper: require(`@/assets/images/theme/neutral/newspaper.png`),
+      mail: require(`@/assets/images/theme/neutral/mail.png`)
     }
   },
   gryffindor: {

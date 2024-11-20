@@ -25,6 +25,7 @@ export const webColors = [
 export const themes = {
   neutral: {
     color: "#ffffff",
+    lighterBackground: "#151515",
     lightBackground: "#0f0f0f",
     background: "#000000",
     darkBackground: "#000000",
@@ -33,6 +34,7 @@ export const themes = {
   },
   gryffindor: {
     color: "#ff241c",
+    lighterBackground: "#380000",
     lightBackground: "#300000",
     background: "#1a0000",
     darkBackground: "#130000",
@@ -41,6 +43,7 @@ export const themes = {
   },
   slytherin: {
     color: "#05dc00",
+    lighterBackground: "#002300",
     lightBackground: "#001d00",
     background: "#001000",
     darkBackground: "#000a00",
@@ -49,6 +52,7 @@ export const themes = {
   },
   ravenclaw: {
     color: "#00b2ff",
+    lighterBackground: "#00222e",
     lightBackground: "#001c28",
     background: "#000e14",
     darkBackground: "#00090d",
@@ -57,6 +61,7 @@ export const themes = {
   },
   hufflepuff: {
     color: "#ffd90d",
+    lighterBackground: "#2b2500",
     lightBackground: "#241e00",
     background: "#131000",
     darkBackground: "#0d0900",
@@ -65,6 +70,7 @@ export const themes = {
   },
   disabled: {
     color: "#949494",
+    lighterBackground: "lightgray",
     lightBackground: "lightgray",
     background: "gray",
     darkBackground: "#000000",
