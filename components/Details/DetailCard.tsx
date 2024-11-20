@@ -1,15 +1,19 @@
-import { fieldNames, houses, PotterObject, Theme } from "@/constants/Types";
-import { ScrollView, View, Image, Text, ImageBackground } from "react-native";
-import Space from "../Space";
-import { getImage, getData, getHouseColor } from "./DetailFunctions";
-import DetailList from "./DetailList";
-import detailStyles from "./DetailStyles";
-import { useContext } from "react";
-import { ThemeContext } from "../ThemeContext";
-import { themes } from "@/constants/Themes";
-import LinearGradient from "react-native-linear-gradient";
-import images from "@/constants/Images";
+import { fieldNames, houses, PotterObject, Theme } from "@/constants/Types"
+import { ScrollView, View, Image, Text, ImageBackground } from "react-native"
+import Space from "@/components/Space"
+import { getImage, getData, getHouseColor } from "./DetailFunctions"
+import DetailList from "./DetailList"
+import detailStyles from "./DetailStyles"
+import { useContext } from "react"
+import { ThemeContext } from "@/components/ThemeContext"
+import { themes } from "@/constants/Themes"
+import LinearGradient from "react-native-linear-gradient"
+import images from "@/constants/Images"
 
+
+// Normal card containing the details for books or movies
+// Labels can be placed on the right of the picture, at the bottom of the small card, or outside the small card
+// Collapsibles go only outside of the card
 export function DetailCard({object, labelsInline, labelsInside, labelsOutside, collapsibles, imageStyles, imageViewStyles}: {object: PotterObject, labelsInline: string[], labelsInside?: string[], labelsOutside?: string[], collapsibles?: string[], imageStyles: object, imageViewStyles?: object}) {
 	const theme = useContext(ThemeContext).theme
 	const lightBackground = themes[theme].lightBackground
@@ -18,25 +22,41 @@ export function DetailCard({object, labelsInline, labelsInside, labelsOutside, c
 
 	return (
 		<ScrollView style={detailStyles.wrapper}>
+
+			{/* Background for the entire card */}
 			<View style={[detailStyles.cardWrapper, {backgroundColor: background}]}>
+
+				{/* Brighter background for the small card */}
 				<View style={[detailStyles.card, {backgroundColor: lightBackground}]}>
 					<View style={detailStyles.cardInline}>
+
+						{/* The image, I truly hate the person who put those stupid frames around movie posters */}
 						<View style={imageViewStyles ?? {}}>
-							<Image source={getImage(object, fieldNames.image[object.type])} style={imageStyles}/>
+							<Image
+								source={getImage(object, fieldNames.image[object.type])}
+								style={imageStyles}
+							/>
 						</View>
+
+						{/* The header and the labels on the right of the image */}
 						<View style={{flex: 99}}>
 							<Text style={detailStyles.header}>{getData(object, fieldNames.header[object.type])}</Text>
 							<Space/>
 							<DetailList object={object} labels={labelsInline} collapsibles={[]}/>
 						</View>
+
 					</View>
+
+					{/* Labels inside the card, but under the image */}
 					{labelsInside && (
 						<>
-						<Space/>
-						<DetailList object={object} labels={labelsInside} collapsibles={[]}/>
-					</>
+							<Space/>
+							<DetailList object={object} labels={labelsInside} collapsibles={[]}/>
+						</>
 					)}
 				</View>
+
+				{/* Labels outside the card and collapsibles */}
 				{labelsOutside || collapsibles && (
 					<View style={detailStyles.cardOutside}>
 						<DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
@@ -47,6 +67,9 @@ export function DetailCard({object, labelsInline, labelsInside, labelsOutside, c
 	)
 }
 
+
+// Card with gradient or color read off characters, potions and spells
+// Rules are the same like with the normal card, but a gradient in the form of 2+ long array can be passed too
 export function DetailCardGradient({object, labelsInline, labelsInside, labelsOutside, collapsibles, imageStyles, gradient}: {object: PotterObject, labelsInline: string[], labelsInside?: string[], labelsOutside?: string[], collapsibles?: string[], imageStyles: object, gradient: string[]}) {
 	const theme = useContext(ThemeContext).theme
 	const lightBackground = themes[theme].lightBackground
@@ -59,7 +82,9 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 	if (object.type == "character") {
 		houseColor = getHouseColor(object)
 	}
-	else if (!gradient.includes(lightBackground)) dimGradient = true
+	else if (!gradient.includes(lightBackground)) {
+		dimGradient = true
+	}
 
 	return (
 		<ScrollView style={detailStyles.wrapper}>
@@ -80,19 +105,27 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 							<View style={[detailStyles.cardDimmer, {backgroundColor: dimGradient ? "#000000aa" : "transparent"}]}>
 
 								<View style={detailStyles.cardInline}>
-									<Image source={getImage(object, fieldNames.image[object.type])} style={imageStyles}/>
+
+									<Image
+										source={getImage(object, fieldNames.image[object.type])}
+										style={imageStyles}
+									/>
+
 									<View style={{flex: 99}}>
 										<Text style={detailStyles.header}>{getData(object, fieldNames.header[object.type])}</Text>
 										<Space/>
 										<DetailList object={object} labels={labelsInline} collapsibles={[]}/>
 									</View>
+
 								</View>
+
 								{labelsInside && (
-								<>
-									<Space/>
-									<DetailList object={object} labels={labelsInside} collapsibles={[]}/>
-								</>
+									<>
+										<Space/>
+										<DetailList object={object} labels={labelsInside} collapsibles={[]}/>
+									</>
 								)}
+
 							</View>
 						</ImageBackground>
 					</LinearGradient>

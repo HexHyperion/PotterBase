@@ -1,9 +1,9 @@
-import { ThemeContext } from "@/components/ThemeContext";
-import ThemeSelector from "@/components/ThemeSelector";
-import images from "@/constants/Images";
-import { themes } from "@/constants/Themes";
-import { useContext } from "react";
-import { Image, Text, View } from "react-native";
+import { ThemeContext } from "@/components/ThemeContext"
+import ThemeSelector from "@/components/ThemeSelector"
+import images from "@/constants/Images"
+import { themes } from "@/constants/Themes"
+import { useContext } from "react"
+import { Image, Text, View } from "react-native"
 
 export default function Home() {
   const {theme, setTheme} = useContext(ThemeContext)

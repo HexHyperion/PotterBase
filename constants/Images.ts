@@ -123,6 +123,6 @@ const images = {
       train: require(`@/assets/images/theme/disabled/train.png`)
     }
   }
-};
+}
 
-export default images;
+export default images

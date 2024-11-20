@@ -1,12 +1,15 @@
-import { PotterObject } from "@/constants/Types";
-import { View, Text, Image } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
-import { getImage, extractColors } from "../Details/DetailFunctions";
-import DetailList from "../Details/DetailList";
-import Space from "../Space";
-import fetchStyles from "./FetchStyles";
-import FetchingCardTemplate from "./FetchingCardTemplate";
+import { PotterObject } from "@/constants/Types"
+import { View, Text, Image } from "react-native"
+import LinearGradient from "react-native-linear-gradient"
+import { getImage, extractColors } from "@/components/Details/DetailFunctions"
+import DetailList from "@/components/Details/DetailList"
+import Space from "@/components/Space"
+import fetchStyles from "./FetchStyles"
+import FetchingCardTemplate from "./FetchingCardTemplate"
 
+
+// Just a wrapper for the FetchingCardTemplate
+// Decides which labels should the card display
 export default function FetchingCard({item}: {item: PotterObject}) {
   switch (item.type) {
     case "book": {
@@ -15,9 +18,10 @@ export default function FetchingCard({item}: {item: PotterObject}) {
       )
     }
     case "chapter": {
+      // Not implemented, I'll handle the chapters separately
       return (
-          <View>{item.attributes.title}</View>
-        )
+        <View>{item.attributes.title}</View>
+      )
     }
     case "movie": {
       return (

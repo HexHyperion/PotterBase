@@ -14,11 +14,19 @@ export default function DetailCollapsible({object, label}: {object: PotterObject
     (object.attributes as any)[toProp(label)].length) ? ((object.attributes as any)[toProp(label)].length != 1 ?
     (
       <>
-        {/* TODO add some rotating arrow and things */}
-        <TouchableWithoutFeedback onPress={() => setCollapsed(!collapsed)}><Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>{label}: ▼</Text></TouchableWithoutFeedback>
+        {/* Label text functioning as a button for the Collapsible */}
+        {/* Also the arrow changes its state when collapsed */}
+        <TouchableWithoutFeedback onPress={() => setCollapsed(!collapsed)}>
+          <Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>{label}: <Text style={{fontFamily: "Lato-Regular"}}>{collapsed ? "▶" : "▼"}</Text></Text>
+        </TouchableWithoutFeedback>
+
         <Collapsible collapsed={collapsed}>
           {
-            (object.attributes as any)[toProp(label)]?.map((item: string, index: number) => (<Text key={index} style={detailStyles.text}>- {item}</Text> )) ?? <Text style={detailStyles.text}>No data</Text>
+            // Another complicated-looking simple thing
+            // Just adds all elements of the array one by one
+            (object.attributes as any)[toProp(label)]?.map((item: string, index: number) => (
+              <Text key={index} style={detailStyles.text}>- {item}</Text>
+            ))
           }
         </Collapsible>
       </>

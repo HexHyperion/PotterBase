@@ -1,4 +1,4 @@
-export type Theme = "neutral" | "gryffindor" | "slytherin" | "ravenclaw" | "hufflepuff" | "disabled";
+export type Theme = "neutral" | "gryffindor" | "slytherin" | "ravenclaw" | "hufflepuff" | "disabled"
 
 export type Category = "Books" | "Movies" | "Characters" | "Potions" | "Spells"
 
@@ -21,6 +21,7 @@ export type FilterCardProps = {
   onChange: (updatedFilter: FilterData) => void
   onDelete: () => void
 }
+
 
 export type PotterObject = Book | Chapter | Movie | Character | Potion | Spell
 
@@ -47,6 +48,7 @@ export type FetchedData = {
     last: string | undefined
   }
 }
+
 
 export type Book = {
   id: string
@@ -202,6 +204,7 @@ export type Spell = {
     self: string
   }
 }
+
 
 export const fieldNames = {
   image: {

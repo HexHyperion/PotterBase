@@ -11,6 +11,8 @@ import Filters from "./Filters"
 
 const Stack = createStackNavigator()
 
+
+// The nested stack navigation component responsible for opening those modal-like windows inside of tabs
 export default function NestedNavigator({category}: {category: Category}) {
   const theme = useContext(ThemeContext).theme
   const background = themes[theme].background
@@ -31,6 +33,7 @@ export default function NestedNavigator({category}: {category: Category}) {
           headerShadowVisible: false
         }}
       />
+
       <Stack.Screen
         name="Details"
         component={Details}
@@ -38,13 +41,16 @@ export default function NestedNavigator({category}: {category: Category}) {
           presentation: "transparentModal",
           headerStyle: {backgroundColor: background},
           headerTitleStyle: {fontFamily: "HarryP", fontSize: 36, paddingTop: 5},
-          headerBackImage: () => {return <Image source={images.neutral.buttons.wands} style={{height: 25, width: 25, marginLeft: 10, objectFit: "contain"}}/>},
+          headerBackImage: () => {
+            return <Image source={images.neutral.buttons.wands} style={{height: 25, width: 25, marginLeft: 10, objectFit: "contain"}}/>   // For some reason doesn't work without the arrow expression
+          },
           cardStyle: {backgroundColor: `${darkBackground}fa`},
           headerTintColor: "white",
           headerShadowVisible: false,
           ...TransitionPresets.ModalSlideFromBottomIOS
         }}
       />
+
       <Stack.Screen
         name="Filters"
         component={Filters}

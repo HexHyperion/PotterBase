@@ -1,13 +1,16 @@
-import { themes } from "@/constants/Themes";
-import { houses, PotterObject } from "@/constants/Types";
-import { useContext } from "react";
-import { Text } from "react-native";
-import { Theme } from "@/constants/Types";
-import { extractColors } from "@/components/Details/DetailFunctions";
-import detailStyles from "@/components/Details/DetailStyles";
-import { ThemeContext } from "@/components/ThemeContext";
-import { DetailCard, DetailCardGradient } from "@/components/Details/DetailCard";
+import { themes } from "@/constants/Themes"
+import { houses, PotterObject } from "@/constants/Types"
+import { useContext } from "react"
+import { Text } from "react-native"
+import { Theme } from "@/constants/Types"
+import { extractColors } from "@/components/Details/DetailFunctions"
+import detailStyles from "@/components/Details/DetailStyles"
+import { ThemeContext } from "@/components/ThemeContext"
+import { DetailCard, DetailCardGradient } from "@/components/Details/DetailCard"
 
+
+// Window/stack screen/modal displaying all information about the passed object
+// It's soo compressed already and it's stil thiccc
 export default function Details({navigation, route}: {navigation: any, route: any}) {
   const object = route.params.object as PotterObject
   const theme = useContext(ThemeContext).theme
@@ -24,7 +27,7 @@ export default function Details({navigation, route}: {navigation: any, route: an
       )
     }
     case "chapter": {
-
+      // insert some joke about notImplementedException here, idk
     }
 
     case "movie": {
@@ -39,8 +42,19 @@ export default function Details({navigation, route}: {navigation: any, route: an
     }
 
     case "character": {
-      // Seriously? Moody is "Unknown", and now they give us three houses at once?!
-      const gradient = (themes[((houses.includes(object.attributes.house ?? "") ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient).length >= 2 ? themes[((object.attributes.house != "Unknown" ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient : [lightBackground, lightBackground]
+      // Seriously? Moody was "Unknown", and now they give us three houses at once?!
+
+      // Before:
+      // const gradient = (themes[((houses.includes(object.attributes.house ?? "") ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient).length >= 2 ? themes[((object.attributes.house != "Unknown" ? object.attributes.house : null) ?? "neutral").toLowerCase() as Theme].gradient : [lightBackground, lightBackground]
+
+      // After:
+      const house = object.attributes.house
+      const houseFiltered = ((houses.includes(house ?? "") ? house : null) ?? "neutral").toLowerCase() as Theme   // Get the gradient for the given character's house - if it's unknown, use neutral
+
+      const gradient = (
+        themes[houseFiltered].gradient).length >= 2   // The gradient for neutral is [], so if there's no house...
+          ? themes[houseFiltered].gradient
+          : [lightBackground, lightBackground]        // ...the background of the card is taken from the current theme
 
       return (
         <DetailCardGradient object={object} gradient={gradient}
@@ -53,8 +67,12 @@ export default function Details({navigation, route}: {navigation: any, route: an
     }
 
     case "potion": {
-      const backgroundGradient = extractColors(object.attributes.characteristics ?? "")
-      const gradient = backgroundGradient.length >= 2 ? backgroundGradient : (backgroundGradient.length == 1 ? [...backgroundGradient, ...backgroundGradient] : [lightBackground, lightBackground])
+      const backgroundGradient = extractColors(object.attributes.characteristics ?? "")   // This is sooo genius
+      const gradient = backgroundGradient.length >= 2       // Kinda the same as with characters
+        ? backgroundGradient                                // If there are 2+ colors, OK
+        : (backgroundGradient.length == 1
+          ? [...backgroundGradient, ...backgroundGradient]  // If there's one, duplicate it
+          : [lightBackground, lightBackground])             // If there's none, use the current theme background
 
       return (
         <DetailCardGradient object={object} gradient={gradient}
@@ -66,8 +84,13 @@ export default function Details({navigation, route}: {navigation: any, route: an
     }
 
     case "spell": {
+      // The exact same thing as with potions
       const backgroundGradient = extractColors(object.attributes.light ?? "")
-      const gradient = backgroundGradient.length >= 2 ? backgroundGradient : (backgroundGradient.length == 1 ? [...backgroundGradient, ...backgroundGradient] : [lightBackground, lightBackground])
+      const gradient = backgroundGradient.length >= 2
+        ? backgroundGradient
+        : (backgroundGradient.length == 1
+          ? [...backgroundGradient, ...backgroundGradient]
+          : [lightBackground, lightBackground])
 
       return (
         <DetailCardGradient object={object} gradient={gradient}

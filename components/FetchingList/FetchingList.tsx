@@ -13,17 +13,21 @@ import images from "@/constants/Images"
 
 const endpoint = "https://api.potterdb.com/v1/"
 const Stack = createStackNavigator()
-let currentQuery: string = ""
+let currentQuery = ""
 let queryPage = "?page[number]=1"
 let querySearch = ""
 let queryFilters = ""
 let querySort = ""
 
+
+// The list responsible for displaying the fetched data
+// aka the sweet child o' mine
 export default function FetchingList({navigation}: {navigation: any}) {
 
   const theme = useContext(ThemeContext).theme
   const route = useRoute()
   const accent = themes[theme].accent
+  const color = themes[theme].color
   const background = themes[theme].background
   const lightBackground = themes[theme].lightBackground
   const darkBackground = themes[theme].darkBackground
@@ -33,6 +37,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<FetchedData>({} as FetchedData)
+
 
     // Fetches the data from the PotterDB API (or pretty much any other REST API)
     // If an empty string is passed, returns without sending any requests
@@ -53,6 +58,9 @@ export default function FetchingList({navigation}: {navigation: any}) {
       }
     }
 
+
+    // Resets everything on component load
+    // Prevents passing the query to other tabs/categories
     useEffect(() => {
       fetchData()
       currentQuery = ""
@@ -78,6 +86,10 @@ export default function FetchingList({navigation}: {navigation: any}) {
       )
     }
 
+
+
+    // ================================ EVENT HANDLERS ==================================
+
     // Changes the FetchingList data source to the first, last, previous or next page
     // If the link is nonexistent passes an empty string, causing fetchData() to return without sending a new request
     const handlePage = (link: Link) => {
@@ -86,6 +98,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
         fetchData()
       }
     }
+
 
     // Changes the FetchingList data source to a page with an exact number
     // Won't fetch new data if an invalid value was passed
@@ -100,6 +113,9 @@ export default function FetchingList({navigation}: {navigation: any}) {
       }
     }
 
+
+    // Sets the search query to whatever the user writes
+    // TIL about encodeURIComponent so spaces and special symbols can be entered as well
     const handleSearch = ({nativeEvent: {text}}: {nativeEvent: {text: string}}) => {
       try {
         currentQuery = text
@@ -125,6 +141,8 @@ export default function FetchingList({navigation}: {navigation: any}) {
       }
     }
 
+
+    // Just resets everything
     const handleReset = () => {
       currentQuery = ""
       queryPage = `?page[number]=1`
@@ -134,110 +152,170 @@ export default function FetchingList({navigation}: {navigation: any}) {
       fetchData()
     }
 
+    // Callback passed to the filter menu
+    // Sets the filters once the user returns
+    const updateFilters = (newFilters: string) => {
+      queryFilters = newFilters
+      fetchData()
+    }
+
+
+
+    // ================================ COMPONENTS ==================================
+
+    // Sticky searchbar and the button navigating to the filter menu
+    // They have to be here or I'd need to pass the whole damn component in props
+    const FetchingSearchBar = ({isDataEmpty = false}: {isDataEmpty?: boolean}) => {
+      return (
+        <>
+          {/* Search and filter group - the highest row */}
+          <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
+
+            <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
+              {/* Search bar */}
+              <TextInput
+                style={fetchStyles.input}
+                returnKeyType="search"
+                defaultValue={currentQuery}
+                onSubmitEditing={handleSearch}
+                placeholderTextColor="#ffffff6a"
+                placeholder={isDataEmpty ? "" : `Search for ${data.data[0].type}s`}   // Check if data exists, prevents reading undefined
+              />
+
+              {/* Clear all filters */}
+              <TouchableOpacity
+                disabled={(querySearch == "" && queryFilters == "" && querySort == "")}   // Disable only if the query is clear
+                style={fetchStyles.inputGroupButton}
+                activeOpacity={0.85}
+                onPress={handleReset}>
+                <Image
+                  style={{height: 15, width: 15}}
+                  source={(querySearch == "" && queryFilters == "" && querySort == "")    // Dimmed icon if inactive
+                    ? images.disabled.buttons.wands
+                    : images.neutral.buttons.wands}
+                />
+              </TouchableOpacity>
+            </View>
+
+            {/* Filter menu */}
+            <TouchableOpacity
+              style={[fetchStyles.inputFilter, {backgroundColor: queryFilters != "" ? color : lightBackground}]}    // Highlighted if active, background color if not
+              activeOpacity={0.75}
+              onPress={() => {
+                queryFilters = ""
+                navigation.navigate("Filters", {data: data, updateFilters: updateFilters})
+              }}>
+              <Image
+                style={{height: 25, width: 25}}
+                source={(theme == "neutral" && !(querySearch == "" && queryFilters == "" && querySort == ""))     // If the highlight is active and white dim the icon (otherwise it would blend)
+                  ? images.disabled.buttons.sorting
+                  : images.neutral.buttons.sorting}
+              />
+            </TouchableOpacity>
+
+          </View>
+        </>
+      )
+    }
+
+
+    // Single navigation button, decides everything based on the mode
+    const FetchingNavButton = ({mode}: {mode: "first" | "prev" | "next" | "last"}) => {
+      return (
+        <TouchableOpacity
+          activeOpacity={0.75}
+          disabled={!(data.meta as any).pagination[["first","prev"].includes(mode) ? "first" : "last"]}
+          style={[fetchStyles[["first","last"].includes(mode) ? "smallNavButton" : "navButton"], {backgroundColor: lightBackground}]}   // One-line conditionals, my beloved
+          onPress={() => handlePage(mode)}>
+          <Image
+            style={{
+              height: 30, width: 100, objectFit: "contain",
+              transform: [
+                {scaleX: ["first","prev"].includes(mode) ? -1 : 1}   // The same image, but can be X-inverted
+              ]
+            }}
+            source={(data.meta as any).pagination[["first","prev"].includes(mode) ? "first" : "last"]   // Decides which end of the range it should check
+              ? images.neutral.buttons[["first","last"].includes(mode) ? "car" : "broom"]               // Checks which image to display and if the end has been reached
+              : images.disabled.buttons[["first","last"].includes(mode) ? "car" : "broom"]}             // And dims the image if it is the end
+          />
+        </TouchableOpacity>
+      )
+    }
+
+
     // Navigation between pages - first, previous, exact, next and last
-    // So small, yet so big...
-    const FetchingNavigation = () => {
+    const FetchingNavBar = () => {
       if ((data.meta.pagination.last && data.meta.pagination.last > 1) || data.meta.pagination.current > 1) {
         return (
           <View style={fetchStyles.nav}>
 
-            {/* First page */}
-            <TouchableOpacity activeOpacity={0.75}
-              disabled={!(data.meta as any).pagination.first}
-              style={[fetchStyles.smallNavButton, {backgroundColor: lightBackground}]}
-              onPress={() => handlePage("first")}>
-              <Image
-                source={(data.meta as any).pagination.first ? images.neutral.buttons.car : images.disabled.buttons.car}
-                style={{height: 30, width: 100, objectFit: "contain", transform: [{scaleX: -1}]}}
-              />
-            </TouchableOpacity>
-
-            {/* Previous page */}
-            <TouchableOpacity activeOpacity={0.75}
-              disabled={!(data.meta as any).pagination.first}
-              style={[fetchStyles.navButton, {backgroundColor: lightBackground}]}
-              onPress={() => handlePage("prev")}>
-              <Image
-                source={(data.meta as any).pagination.first ? images.neutral.buttons.broom : images.disabled.buttons.broom}
-                style={{height: 30, width: 100, objectFit: "contain", transform: [{scaleX: -1}]}}
-              />
-            </TouchableOpacity>
+            <FetchingNavButton mode="first"/>
+            <FetchingNavButton mode="prev"/>
 
             {/* Exact page number */}
-            <TextInput keyboardType="numeric" defaultValue="" textAlign="center" onSubmitEditing={handleExactPage} placeholderTextColor="white"
+            <TextInput
+              keyboardType="numeric"
+              defaultValue=""
+              textAlign="center"
+              onSubmitEditing={handleExactPage}
+              placeholderTextColor="white"
               style={[fetchStyles.navPage, {backgroundColor: lightBackground, fontFamily: "Grenze-Regular"}]}
               placeholder={((data.meta as any).pagination.current as Double).toString()}
             />
 
-            {/* Next page */}
-            <TouchableOpacity activeOpacity={0.75}
-              disabled={!(data.meta as any).pagination.last}
-              style={[fetchStyles.navButton, {backgroundColor: lightBackground}]}
-              onPress={() => handlePage("next")}>
-              <Image
-                source={(data.meta as any).pagination.last ? images.neutral.buttons.broom : images.disabled.buttons.broom}
-                style={{height: 30, width: 100, objectFit: "contain"}}
-              />
-            </TouchableOpacity>
+            <FetchingNavButton mode="next"/>
+            <FetchingNavButton mode="last"/>
 
-            {/* Last page */}
-            <TouchableOpacity activeOpacity={0.75}
-              disabled={!(data.meta as any).pagination.last}
-              style={[fetchStyles.smallNavButton, {backgroundColor: lightBackground}]}
-              onPress={() => handlePage("last")}>
-              <Image
-                source={(data.meta as any).pagination.last ? images.neutral.buttons.car : images.disabled.buttons.car}
-                style={{height: 30, width: 100, objectFit: "contain"}}
-              />
-            </TouchableOpacity>
           </View>
         )
       }
       else return null
     }
 
+
+
+    // Finally, the return of the whole component
+    // Just so it doesn't blend with other returns
     return (
       <>
-        {loading && <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: darkBackground}}><Text style={{color: "white"}}>Loading...</Text></View>}
-        {!loading && (data.data && data.data.length > 0 ? (
+        {loading && (
+          // Waiting for the fetching to end
+          <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: darkBackground}}>
+            <Text style={{color: "white"}}>Loading...</Text>
+          </View>
+        )}
+
+        {!loading && (
+          // Showing search results
           <>
-            <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
-              <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
-                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="#ffffff6a" placeholder={`Search for ${data.data[0].type}s`} style={fetchStyles.input} returnKeyType="search"></TextInput>
-                <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.wands : images.neutral.buttons.wands} style={{height: 15, width: 15}}/></TouchableOpacity>
+            <FetchingSearchBar isDataEmpty={!(data.data && data.data.length > 0)}/>
+
+            {(data.data && data.data.length > 0) ? (
+              // All data fetched from the current request
+              <FlatList
+                style={{backgroundColor: background}}
+                data={data.data as ArrayLike<PotterObject>}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id.toString()}
+                ListHeaderComponent={FetchingNavBar}
+                ListFooterComponent={FetchingNavBar}
+              />
+            ) : (
+              // If there's no data returned display this
+              <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+                <Text style={fetchStyles.header}>No records found!</Text>
+                <Text style={fetchStyles.text}>Check the spelling or try a different query.</Text>
               </View>
-              <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {navigation.navigate("Filters", {data: data})}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
-            </View>
-            <FlatList
-              style={{backgroundColor: background}}
-              data={data.data as ArrayLike<PotterObject>}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id.toString()}
-              ListHeaderComponent={FetchingNavigation}
-              ListFooterComponent={FetchingNavigation}
-            />
+            )}
           </>
-        ) : (
-          <>
-            <View style={[fetchStyles.inputWrapper, {backgroundColor: background}]}>
-              <View style={[fetchStyles.inputGroup, {backgroundColor: lightBackground}]}>
-                <TextInput defaultValue={currentQuery} onSubmitEditing={handleSearch} placeholderTextColor="#ffffff6a" style={fetchStyles.input} returnKeyType="search"></TextInput>
-                <TouchableOpacity activeOpacity={0.85} disabled={currentQuery == ""} style={fetchStyles.inputGroupButton} onPress={handleReset}><Image source={currentQuery == "" ? images.disabled.buttons.wands : images.neutral.buttons.wands} style={{height: 15, width: 15}}/></TouchableOpacity>
-              </View>
-              <TouchableOpacity activeOpacity={0.75} style={[fetchStyles.inputFilter, {backgroundColor: lightBackground}]} onPress={() => {}}><Image source={images.neutral.buttons.sorting} style={{height: 25, width: 25}}/></TouchableOpacity>
-            </View>
-            <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-              <Text style={fetchStyles.header}>No records found!</Text>
-              <Text style={fetchStyles.text}>Check the spelling or try a different query.</Text>
-            </View>
-          </>
-        ))}
+        )}
       </>
     )
   }
   catch (err) {
-    console.error(err);
+    console.error(err)
     return (
+      // And a failsafe so it doesn't kill itself
       <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
         <Text style={{color: "white", textAlign: "center"}}>Something went wrong during loading the list!</Text>
         <Text style={{color: "white", textAlign: "center"}}>Application returned {`${err}`}</Text>

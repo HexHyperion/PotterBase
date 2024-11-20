@@ -1,8 +1,11 @@
-import images from "@/constants/Images";
-import { Theme } from "@/constants/Types";
+import images from "@/constants/Images"
+import { Theme } from "@/constants/Types"
 
-type Page = "home" | "books" | "movies" | "characters" | "potions" | "spells";
+type Page = "home" | "books" | "movies" | "characters" | "potions" | "spells"
 
+
+// Returns an image to use as the navbar icon based on the theme
+// One of the first things I did in this project, don't judge the stupidity of the solution pls
 export function SelectNavImage(active: boolean, theme: Theme, page: Page): any {
   const houseArray = {
     "neutral": images.neutral.navbar,
@@ -11,12 +14,12 @@ export function SelectNavImage(active: boolean, theme: Theme, page: Page): any {
     "ravenclaw": images.ravenclaw.navbar,
     "hufflepuff": images.hufflepuff.navbar,
     "disabled": images.disabled.navbar
-  };
+  }
 
-  let house;
+  let house
 
   if (active) {
-    house = houseArray[theme];
+    house = houseArray[theme]
   }
   else {
     house = houseArray["disabled"]
@@ -29,7 +32,7 @@ export function SelectNavImage(active: boolean, theme: Theme, page: Page): any {
     "characters": house.characters,
     "potions": house.potions,
     "spells": house.spells
-  };
+  }
 
-  return imgArray[page];
+  return imgArray[page]
 }

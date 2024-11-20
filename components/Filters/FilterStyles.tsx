@@ -9,6 +9,7 @@ const filterStyles = StyleSheet.create({
     display: "flex",
     gap: 10
   },
+
   dropdown: {
     height: 40,
     borderRadius: 10,
@@ -26,6 +27,7 @@ const filterStyles = StyleSheet.create({
     borderWidth: 0,
     marginTop: 5
   },
+
   input: {
     height: 40,
     borderRadius: 10,
@@ -66,6 +68,7 @@ const filterStyles = StyleSheet.create({
     width: 30,
     objectFit: "contain"
   },
+
   delete: {
     display: "flex",
     flexDirection: "row",

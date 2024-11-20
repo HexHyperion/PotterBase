@@ -20,6 +20,7 @@ const detailStyles = StyleSheet.create({
     lineHeight: 26,
     marginTop: 5
   },
+
   wrapper: {
     paddingHorizontal: 10
   },
@@ -54,6 +55,7 @@ const detailStyles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 10
   },
+
   disabled: {
     color: "#8a8a8a"
   }

@@ -18,7 +18,7 @@ export const housesInfo = [
     houseName: "Hufflepuff",
     houseCrest: "./assets/crest-hufflepuff.png",
   },
-];
+]
 
 export const allQuestions = [
   {

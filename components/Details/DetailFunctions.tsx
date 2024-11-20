@@ -1,7 +1,7 @@
-import { Text } from "react-native";
-import { themes, webColors } from "@/constants/Themes";
-import { Character, Theme, PotterObject, ImagePropName, housesLower } from "@/constants/Types";
-import detailStyles from "./DetailStyles";
+import { Text } from "react-native"
+import { themes, webColors } from "@/constants/Themes"
+import { Character, Theme, PotterObject, ImagePropName, housesLower } from "@/constants/Types"
+import detailStyles from "./DetailStyles"
 
 
 // Returns a usable (e.g. hex code) color of a given character's Hogwarts house background

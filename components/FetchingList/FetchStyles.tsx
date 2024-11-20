@@ -13,6 +13,16 @@ const fetchStyles = StyleSheet.create({
     paddingTop: 5,
     fontFamily: "Grenze-Regular"
   },
+  text: {
+    color: "white",
+    fontFamily: "Lato-Regular",
+    fontSize: 14,
+    lineHeight: 20
+  },
+  disabled: {
+    color: "#8a8a8a"
+  },
+
   navButton: {
     flex: 2,
     borderRadius: 10,
@@ -44,15 +54,7 @@ const fetchStyles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 10
   },
-  text: {
-    color: "white",
-    fontFamily: "Lato-Regular",
-    fontSize: 14,
-    lineHeight: 20
-  },
-  disabled: {
-    color: "#8a8a8a"
-  },
+
   input: {
     height: 40,
     flex: 99,
@@ -94,6 +96,7 @@ const fetchStyles = StyleSheet.create({
     gap: 10,
     justifyContent: "space-between"
   },
+
   card: {
     flex: 1,
     flexDirection: "row",
@@ -103,10 +106,11 @@ const fetchStyles = StyleSheet.create({
     borderRadius: 10
   },
   cardInside: {
-    // paddingHorizontal: 10,
     flex: 1,
     paddingRight: 10
   },
+
+
   image: {
     height: "100%",
     borderRadius: 5
@@ -124,7 +128,6 @@ const fetchStyles = StyleSheet.create({
     objectFit: "cover"
   },
   characterImage: {
-    // TODO AUTOMATIC HEIGHT
     minHeight: 120,
     width: 110,
     objectFit: "cover",
@@ -141,6 +144,7 @@ const fetchStyles = StyleSheet.create({
     objectFit: "contain",
     top: 0
   },
+
   imageView: {
     height: "100%",
     position: "relative",

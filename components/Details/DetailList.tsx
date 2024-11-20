@@ -1,8 +1,8 @@
-import { View } from "react-native";
-import { PotterObject } from "@/constants/Types";
-import Space from "@/components/Space";
-import DetailCollapsible from "./DetailCollapsible";
-import DetailLabel from "./DetailLabel";
+import { View } from "react-native"
+import { PotterObject } from "@/constants/Types"
+import Space from "@/components/Space"
+import DetailCollapsible from "./DetailCollapsible"
+import DetailLabel from "./DetailLabel"
 
 // Block of DetailLabels and DetailCollapsibles with values passed by user in according arrays
 // DetailLabels always come first
@@ -11,8 +11,18 @@ import DetailLabel from "./DetailLabel";
 export default function DetailList({object, labels, collapsibles}: {object: PotterObject, labels: string[], collapsibles: string[]}) {
   return (
     <View>
-      {(labels.map((label: string, index: number) => (label != "" ? <DetailLabel key={index} object={object} label={label}/> : <Space key={index}/>)))}
-      {(collapsibles.map((label: string, index: number) => (<View key={index}><Space/><DetailCollapsible object={object} label={label}/></View>)))}
+      {labels.map((label: string, index: number) => (
+        label != ""
+          ? <DetailLabel key={index} object={object} label={label}/>
+          : <Space key={index}/>
+      ))}
+
+      {collapsibles.map((label: string, index: number) => (
+        <View key={index}>
+          <Space/>
+          <DetailCollapsible object={object} label={label}/>
+        </View>
+      ))}
     </View>
   )
 }
