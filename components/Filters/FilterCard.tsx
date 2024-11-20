@@ -18,15 +18,15 @@ export default function FilterCard({ data, filter, onChange, onDelete }: FilterC
   const background = themes[theme].background;
 
   return (
-    <View style={[detailStyles.card, {backgroundColor: lightBackground}]}>
+    <View style={[detailStyles.card, {backgroundColor: background}]}>
       <View style={filterStyles.filter}>
         <View style={filterStyles.inline}>
           <Dropdown
-            style={[filterStyles.dropdown, {backgroundColor: lighterBackground, flex: 2}]}
+            style={[filterStyles.dropdown, {backgroundColor: lightBackground, flex: 2}]}
             selectedTextStyle={filterStyles.dropdownText}
             placeholder="Property name"
             placeholderStyle={{color: "#ffffff6a", fontFamily: "Lato-Regular", fontSize: 14}}
-            containerStyle={[filterStyles.dropdownList, {backgroundColor: lighterBackground}]}
+            containerStyle={[filterStyles.dropdownList, {backgroundColor: lightBackground}]}
             itemTextStyle={{color: "white", fontFamily: "Lato-Regular", fontSize: 14}}
             activeColor={lightBackground}
             data={toDropdownFormat(getFilterableFields(data.data[0]))}
@@ -40,11 +40,11 @@ export default function FilterCard({ data, filter, onChange, onDelete }: FilterC
           </TouchableOpacity>
         </View>
           <Dropdown
-            style={[filterStyles.dropdown, {backgroundColor: lighterBackground, flex: 3}]}
+            style={[filterStyles.dropdown, {backgroundColor: lightBackground, flex: 3}]}
             selectedTextStyle={filterStyles.dropdownText}
             placeholder="Condition"
             placeholderStyle={{color: "#ffffff6a", fontFamily: "Lato-Regular", fontSize: 14}}
-            containerStyle={[filterStyles.dropdownList, {backgroundColor: lighterBackground}]}
+            containerStyle={[filterStyles.dropdownList, {backgroundColor: lightBackground}]}
             itemTextStyle={{color: "white", fontFamily: "Lato-Regular", fontSize: 14}}
             activeColor={lightBackground}
             data={filters}
@@ -55,7 +55,7 @@ export default function FilterCard({ data, filter, onChange, onDelete }: FilterC
           />
         {!["true", "false", "present", "null", "not_null"].includes(filter.condition ?? "") && (
           <TextInput
-            style={[filterStyles.input, { backgroundColor: lighterBackground }]}
+            style={[filterStyles.input, { backgroundColor: lightBackground }]}
             placeholder="Value"
             placeholderTextColor="#ffffff6a"
             value={filter.value}

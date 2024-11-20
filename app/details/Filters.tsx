@@ -62,7 +62,7 @@ export default function Filters({navigation, route}: {navigation: any; route: an
 
   return (
     <ScrollView style={detailStyles.wrapper}>
-      <View style={[detailStyles.cardWrapper, {backgroundColor: background, gap: 10}]}>
+      <View style={[detailStyles.cardWrapper, {gap: 10}]}>
         {filters.map((filter, index) => (
           <FilterCard
             key={index}
@@ -72,9 +72,9 @@ export default function Filters({navigation, route}: {navigation: any; route: an
             onDelete={() => handleDeleteFilter(index)}
           />
         ))}
-        <View style={[filterStyles.inline, {backgroundColor: lightBackground, borderRadius: 10, padding: 10}]}>
-          <TouchableOpacity style={[filterStyles.button, {backgroundColor: lighterBackground}]} onPress={handleConfirm}><Text style={[filterStyles.text, {textAlign: "center", fontSize: 14}]}>Apply filters</Text></TouchableOpacity>
-          <TouchableOpacity style={[filterStyles.addButton, {backgroundColor: lighterBackground}]} onPress={addNewFilter}><Image style={filterStyles.buttonImage} source={images.neutral.buttons.newspaper}/></TouchableOpacity>
+        <View style={[filterStyles.inline, {backgroundColor: background, borderRadius: 10, padding: 10}]}>
+          <TouchableOpacity style={[filterStyles.button, {backgroundColor: lightBackground}]} onPress={handleConfirm}><Text style={[filterStyles.text, {textAlign: "center", fontSize: 14}]}>Apply filters</Text></TouchableOpacity>
+          <TouchableOpacity style={[filterStyles.addButton, {backgroundColor: lightBackground}]} onPress={addNewFilter}><Image style={filterStyles.buttonImage} source={images.neutral.buttons.newspaper}/></TouchableOpacity>
         </View>
       </View>
     </ScrollView>
