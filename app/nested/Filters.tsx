@@ -12,10 +12,12 @@ import images from "@/constants/Images"
 
 // The whole filter menu with the ability to add multiple filters
 export default function Filters({navigation, route}: {navigation: any, route: any}) {
-  const data = route.params.data as FetchedData
+  const data: FetchedData = route.params.data
+  const path: string = route.params.path
 
-  const updateFilters = route.params.updateFilters     // The callback passed from the FetchingList
+  const updateFilters = route.params.updateFilters      // The callback passed from the FetchingList
   const [filters, setFilters] = useState<FilterData[]>([])
+  const [loading, setLoading] = useState(true)
 
   const theme = useContext(ThemeContext).theme
   const background = themes[theme].background
@@ -71,6 +73,7 @@ export default function Filters({navigation, route}: {navigation: any, route: an
     updateFilters(queryString)
     navigation.goBack()
   }
+
 
   return (
     <ScrollView style={detailStyles.wrapper}>

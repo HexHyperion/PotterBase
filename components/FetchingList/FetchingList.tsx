@@ -12,12 +12,10 @@ import FetchingCard from "./FetchingCard"
 import images from "@/constants/Images"
 
 const endpoint = "https://api.potterdb.com/v1/"
-const Stack = createStackNavigator()
 let currentQuery = ""
 let queryPage = "?page[number]=1"
 let querySearch = ""
 let queryFilters = ""
-let querySort = ""
 
 
 // The list responsible for displaying the fetched data
@@ -37,18 +35,25 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<FetchedData>({} as FetchedData)
+    const [fallbackData, setFallbackData] = useState<FetchedData>({} as FetchedData)    // Used to find the type of items when data.data[0] undefined
 
 
     // Fetches the data from the PotterDB API (or pretty much any other REST API)
     // If an empty string is passed, returns without sending any requests
     const fetchData = async () => {
-      let url = endpoint + path + queryPage + querySearch + queryFilters + querySort
+      const url = endpoint + path + queryPage + querySearch + queryFilters
       if (url.trim() == "") return
       try {
         setLoading(true)
         const response = await fetch(url)
-        const fetchedData = await response.json()
+        const fetchedData: FetchedData = await response.json()
         setData(fetchedData)
+        if (!(fetchedData.data && fetchedData.data.length > 0)) {
+          const fallbackUrl = endpoint + path + "?page[size]=1"
+          const fallbackResponse = await fetch(fallbackUrl)
+          const fallbackData: FetchedData = await fallbackResponse.json()
+          setFallbackData(fallbackData)
+        }
       }
       catch (err) {
         console.error(err)
@@ -65,7 +70,6 @@ export default function FetchingList({navigation}: {navigation: any}) {
       currentQuery = ""
       querySearch = ""
       queryFilters = ""
-      querySort = ""
       queryPage = "?page[number]=1"
       fetchData()
     }, [])
@@ -148,7 +152,6 @@ export default function FetchingList({navigation}: {navigation: any}) {
       queryPage = `?page[number]=1`
       querySearch = ""
       queryFilters = ""
-      querySort = ""
       fetchData()
     }
 
@@ -184,14 +187,14 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
               {/* Clear all filters */}
               <TouchableOpacity
-                disabled={(querySearch == "" && queryFilters == "" && querySort == "")}   // Disable only if the query is clear
+                disabled={(querySearch == "" && queryFilters == "")}   // Disable only if the query is clear
                 style={fetchStyles.inputGroupButton}
                 activeOpacity={0.85}
                 onPress={handleReset}>
                 <Image
                   style={{height: 15, width: 15}}
-                  source={(querySearch == "" && queryFilters == "" && querySort == "")    // Dimmed icon if inactive
-                    ? images.disabled.buttons.wands
+                  source={(querySearch == "" && queryFilters == "")    // No icon if inactive
+                    ? require("@/assets/images/transparent.png")
                     : images.neutral.buttons.wands}
                 />
               </TouchableOpacity>
@@ -203,11 +206,11 @@ export default function FetchingList({navigation}: {navigation: any}) {
               activeOpacity={0.75}
               onPress={() => {
                 queryFilters = ""
-                navigation.navigate("Filters", {data: data, updateFilters: updateFilters})
+                navigation.navigate("Filters", {data: ((data.data && data.data.length > 0) ? data : fallbackData), updateFilters: updateFilters, path: path})
               }}>
               <Image
                 style={{height: 25, width: 25}}
-                source={(theme == "neutral" && !(querySearch == "" && queryFilters == "" && querySort == ""))     // If the highlight is active and white dim the icon (otherwise it would blend)
+                source={(theme == "neutral" && !(queryFilters == ""))     // If the highlight is active and white dim the icon (otherwise it would blend)
                   ? images.disabled.buttons.sorting
                   : images.neutral.buttons.sorting}
               />

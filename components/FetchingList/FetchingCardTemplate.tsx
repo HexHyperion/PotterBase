@@ -19,6 +19,7 @@ export default function FetchingCardTemplate({item, labels, optionalField, optio
     <View style={[fetchStyles.card, {backgroundColor: lightBackground}]}>
 
       {/* The big image on the left side of the card */}
+      {/* Stylesheets have names like "bookImageView", "bookImage", hence the weird expression below */}
       <View style={[(fetchStyles as any)[`${item.type}ImageView`] ?? {}, fetchStyles.imageView]}>
         <Image style={[(fetchStyles as any)[`${item.type}Image`] ?? {}, fetchStyles.image]} source={getImage(item, fieldNames.image[item.type])}/>
       </View>

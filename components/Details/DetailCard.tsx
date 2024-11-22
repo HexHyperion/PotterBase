@@ -9,6 +9,7 @@ import { ThemeContext } from "@/components/ThemeContext"
 import { themes } from "@/constants/Themes"
 import LinearGradient from "react-native-linear-gradient"
 import images from "@/constants/Images"
+import { Href, Link } from "expo-router"
 
 
 // Normal card containing the details for books or movies
@@ -57,9 +58,22 @@ export function DetailCard({object, labelsInline, labelsInside, labelsOutside, c
 				</View>
 
 				{/* Labels outside the card and collapsibles */}
-				{labelsOutside || collapsibles && (
+				{/* If there's none just the wiki link that's present everywhere but chapters */}
+				{(labelsOutside || collapsibles) ? (
 					<View style={detailStyles.cardOutside}>
 						<DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
+						{(object.type != "chapter") && (
+              <>
+								<Space/>
+								<Text style={detailStyles.text}><Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>Wiki: </Text><Link style={{textDecorationLine: "underline"}} href={object.attributes.wiki as Href}>{getData(object, fieldNames.header[object.type])} on Fandom</Link></Text>
+							</>
+              // Ah yes, I love when the emulator kills itself and bluescreens my entire PC every time Chrome is opened
+						)}
+					</View>
+				) : (object.type != "chapter") && (
+					<View style={detailStyles.cardOutside}>
+						<DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
+						<Text style={detailStyles.text}><Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>Wiki: </Text><Link style={{textDecorationLine: "underline"}} href={object.attributes.wiki as Href}>{getData(object, fieldNames.header[object.type])} on Fandom</Link></Text>
 					</View>
 				)}
 			</View>
@@ -131,11 +145,23 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 					</LinearGradient>
 
 					{/* Stuff outside the small card */}
-					{(labelsOutside || collapsibles) && (
-						<View style={detailStyles.cardOutside}>
-							<DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
-						</View>
-					)}
+					{(labelsOutside || collapsibles) ? (
+            <View style={detailStyles.cardOutside}>
+              <DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
+              {(object.type != "chapter") && (
+                <>
+                  <Space/>
+                  <Text style={detailStyles.text}><Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>Wiki: </Text><Link style={{textDecorationLine: "underline"}} href={object.attributes.wiki as Href}>{getData(object, fieldNames.header[object.type])} on Fandom</Link></Text>
+                </>
+                // Ah yes, I love when the emulator kills itself and bluescreens my entire PC every time Chrome is opened
+              )}
+            </View>
+          ) : (object.type != "chapter") && (
+            <View style={detailStyles.cardOutside}>
+              <DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
+              <Text style={detailStyles.text}><Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>Wiki: </Text><Link style={{textDecorationLine: "underline"}} href={object.attributes.wiki as Href}>{getData(object, fieldNames.header[object.type])} on Fandom</Link></Text>
+            </View>
+          )}
 				</View>
 			</LinearGradient>
 		</ScrollView>
