@@ -11,7 +11,7 @@ import { FetchedData, FilterCardProps } from "@/constants/Types"
 import images from "@/constants/Images"
 
 
-export default function FilterCard({ data, filter, onChange, onDelete }: FilterCardProps) {
+export default function FilterCard({data, filter, onChange, onDelete}: FilterCardProps) {
   const theme = useContext(ThemeContext).theme
   const lighterBackground = themes[theme].lighterBackground
   const lightBackground = themes[theme].lightBackground
@@ -63,7 +63,7 @@ export default function FilterCard({ data, filter, onChange, onDelete }: FilterC
           onChange={(item) => onChange({...filter, condition: item.value})}
         />
 
-        {/* Input for the value to check, hides if a yes/no condition was chosen */}
+        {/* Third row, TextInput for the value to check, hides if a yes/no condition was chosen */}
         {!["true", "false", "present", "null", "not_null"].includes(filter.condition ?? "") && (
           <TextInput
             style={[filterStyles.input, { backgroundColor: lightBackground }]}

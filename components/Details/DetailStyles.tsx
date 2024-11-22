@@ -56,6 +56,16 @@ const detailStyles = StyleSheet.create({
     borderRadius: 10
   },
 
+  chapterButton: {
+    paddingHorizontal: 15,
+    marginTop: 10,
+    borderRadius: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    height: 40
+  },
+
   disabled: {
     color: "#8a8a8a"
   }

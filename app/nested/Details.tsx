@@ -23,6 +23,7 @@ export default function Details({navigation, route}: {navigation: any, route: an
           labelsInline={["Author", "", "Release date", "", "Dedication", "", "Pages"]}
           labelsInside={["", "Summary"]}
           imageStyles={{height: 220, width: 144, borderWidth: 1, objectFit: "contain", borderRadius: 10}}
+          navigation={navigation}
         />
       )
     }

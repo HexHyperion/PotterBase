@@ -10,12 +10,13 @@ import { themes } from "@/constants/Themes"
 import LinearGradient from "react-native-linear-gradient"
 import images from "@/constants/Images"
 import { Href, Link } from "expo-router"
+import { TouchableOpacity } from "react-native-gesture-handler"
 
 
 // Normal card containing the details for books or movies
 // Labels can be placed on the right of the picture, at the bottom of the small card, or outside the small card
 // Collapsibles go only outside of the card
-export function DetailCard({object, labelsInline, labelsInside, labelsOutside, collapsibles, imageStyles, imageViewStyles}: {object: PotterObject, labelsInline: string[], labelsInside?: string[], labelsOutside?: string[], collapsibles?: string[], imageStyles: object, imageViewStyles?: object}) {
+export function DetailCard({object, labelsInline, labelsInside, labelsOutside, collapsibles, imageStyles, imageViewStyles, navigation}: {object: PotterObject, labelsInline: string[], labelsInside?: string[], labelsOutside?: string[], collapsibles?: string[], imageStyles: object, imageViewStyles?: object, navigation?: any}) {
   const theme = useContext(ThemeContext).theme
   const lightBackground = themes[theme].lightBackground
   const background = themes[theme].background
@@ -56,6 +57,13 @@ export function DetailCard({object, labelsInline, labelsInside, labelsOutside, c
             </>
           )}
         </View>
+
+        {/* Button that opens the chapter explorer */}
+        {object.type == "book" && (
+          <TouchableOpacity activeOpacity={0.75} style={[detailStyles.chapterButton, {backgroundColor: lightBackground}]} onPress={() => navigation.navigate("Chapters", {book: object.id})}>
+            <Text style={[detailStyles.text, {textAlign: "center", fontSize: 14}]}>View chapters</Text>
+          </TouchableOpacity>
+        )}
 
         {/* Labels outside the card and collapsibles */}
         {/* If there's none just the wiki link that's present everywhere but chapters */}
