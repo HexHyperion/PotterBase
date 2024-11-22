@@ -7,7 +7,8 @@ import { Image } from "react-native"
 import { ThemeContext } from "@/components/ThemeContext"
 import { themes } from "@/constants/Themes"
 import images from "@/constants/Images"
-import Filters from "./Filters"
+import Filters from "@/app/nested/Filters"
+import Chapters from "@/app/nested/Chapters"
 
 const Stack = createStackNavigator()
 
@@ -37,6 +38,23 @@ export default function NestedNavigator({category}: {category: Category}) {
       <Stack.Screen
         name="Details"
         component={Details}
+        options={{
+          presentation: "transparentModal",
+          headerStyle: {backgroundColor: background},
+          headerTitleStyle: {fontFamily: "HarryP", fontSize: 36, paddingTop: 5},
+          headerBackImage: () => {
+            return <Image source={images.neutral.buttons.wands} style={{height: 25, width: 25, marginLeft: 10, objectFit: "contain"}}/>   // For some reason doesn't work without the arrow expression
+          },
+          cardStyle: {backgroundColor: `${darkBackground}fa`},
+          headerTintColor: "white",
+          headerShadowVisible: false,
+          ...TransitionPresets.ModalSlideFromBottomIOS
+        }}
+      />
+
+      <Stack.Screen
+        name="Chapters"
+        component={Chapters}
         options={{
           presentation: "transparentModal",
           headerStyle: {backgroundColor: background},

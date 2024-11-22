@@ -157,10 +157,10 @@ export function DetailCardGradient({object, labelsInline, labelsInside, labelsOu
 							)}
 						</View>
 						) : (object.type != "chapter") && (
-						<View style={detailStyles.cardOutside}>
-							<DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
-							<Text style={detailStyles.text}><Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>Wiki: </Text><Link style={{textDecorationLine: "underline"}} href={object.attributes.wiki as Href}>{getData(object, fieldNames.header[object.type])} on Fandom</Link></Text>
-						</View>
+              <View style={detailStyles.cardOutside}>
+                <DetailList object={object} labels={labelsOutside ?? []} collapsibles={collapsibles ?? []}/>
+                <Text style={detailStyles.text}><Text style={[detailStyles.text, {fontFamily: "Grenze-Bold", fontSize: 16}]}>Wiki: </Text><Link style={{textDecorationLine: "underline"}} href={object.attributes.wiki as Href}>{getData(object, fieldNames.header[object.type])} on Fandom</Link></Text>
+              </View>
 						)}
 				</View>
 			</LinearGradient>
