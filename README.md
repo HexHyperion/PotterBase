@@ -1,5 +1,5 @@
 # PotterBase, a PotterDB data explorer for SWM
-Daaamn, what a journey that was! Seeing the language for the first time, writing this thing for 2 weeks straight using the documentation and packages written by people I (probably) met in person in the office... But hey, I think for my first project ever made in React Native and a second one ever made in TypeScript, it's not that bad :P
+Daaamn, what a journey that was! Seeing the language for the first time, writing this thing for 2 weeks straight using the documentation and packages written by people I (probably) have met in person in the office... But hey, I think as my first project ever made in React Native and a second one ever made in TypeScript, it's not that bad :P
 ## Features
 - Fetches data from the PotterDB API (obviously)
 - Lists everything in categories (yup, one of my additional features is the fact that I handle _everything_, not only characters :D )
