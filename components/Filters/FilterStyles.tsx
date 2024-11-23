@@ -25,7 +25,8 @@ const filterStyles = StyleSheet.create({
   dropdownList: {
     borderRadius: 10,
     borderWidth: 0,
-    marginTop: 5
+    marginHorizontal: 5,
+    overflow: "hidden"
   },
 
   input: {

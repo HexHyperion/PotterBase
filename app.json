@@ -34,19 +34,10 @@
         {
           "fonts": [
             "./assets/fonts/HarryP.ttf",
-            "./assets/fonts/FacultyGlyphic.ttf",
-            "./assets/fonts/Metamorphous.ttf",
-            "./assets/fonts/ModernAntiqua.ttf",
-            "./assets/fonts/Grenze-Light.ttf",
-            "./assets/fonts/Grenze-Italic.ttf",
             "./assets/fonts/Grenze-Regular.ttf",
-            "./assets/fonts/Grenze-Medium.ttf",
             "./assets/fonts/Grenze-SemiBold.ttf",
             "./assets/fonts/Grenze-Bold.ttf",
-            "./assets/fonts/Lato-Italic.ttf",
-            "./assets/fonts/Lato-Regular.ttf",
-            "./assets/fonts/Lato-Light.ttf",
-            "./assets/fonts/Lato-Bold.ttf"
+            "./assets/fonts/Lato-Regular.ttf"
           ]
         }
       ]

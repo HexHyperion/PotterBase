@@ -1,7 +1,7 @@
 import { createStackNavigator, TransitionPresets } from "@react-navigation/stack"
 import FetchingList from "@/components/FetchingList/FetchingList"
 import Details from "@/app/nested/Details"
-import { Category, Theme } from "@/constants/Types"
+import { Category } from "@/constants/Types"
 import { useContext } from "react"
 import { Image } from "react-native"
 import { ThemeContext } from "@/components/ThemeContext"

@@ -4,11 +4,11 @@ export type Category = "Books" | "Movies" | "Characters" | "Potions" | "Spells"
 export type Path = "books" | "chapters" | "movies" | "characters" | "potions" | "spells"
 
 export type QueryData = {
-  currentFilters: FilterData[];
-  currentQuery: string;
-  queryPage: string;
-  querySearch: string;
-  queryFilters: string;
+  currentFilters: FilterData[]
+  currentQuery: string
+  queryPage: string
+  querySearch: string
+  queryFilters: string
 }
 
 export const defaultQueryData: QueryData = {

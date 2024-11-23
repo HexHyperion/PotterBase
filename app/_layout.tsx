@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { Text, Image, StatusBar, ColorValue } from "react-native"
 import Home from "./Home"
 import Books from "./Books"
@@ -12,6 +12,7 @@ import { ThemeContext } from "@/components/ThemeContext"
 import { themes } from "@/constants/Themes"
 import { Theme } from "@/constants/Types"
 import SystemNavigationBar from "react-native-system-navigation-bar"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const Tab = createBottomTabNavigator()
 
@@ -24,14 +25,29 @@ const navColor = async (color: string) => {
 // aka those little tabs at the bottom of the screen that gave me so much trouble
 export default function RootStack() {
 
-  const [theme, setTheme] = useState<Theme>("neutral")    // CHANGE IT LATER TO USE ASYNCMEMORY!!!
+  const [theme, setTheme] = useState<Theme>("neutral")  // If AsyncMemory failed
   const value = {theme, setTheme}
   const color = themes[theme].color
   const background = themes[theme].background
   const darkBackground = themes[theme].darkBackground
 
-  navColor(background)
 
+  // Reads the saved theme from AsyncStorage and applies it
+  const readTheme = async () => {
+    try {
+      const theme = await AsyncStorage.getItem("theme")
+      if (theme !== null) {
+        setTheme(theme as Theme)
+      }
+    }
+    catch (err) {
+      console.error(err)
+    }
+  }
+
+  readTheme()
+
+  navColor(background)
   StatusBar.setBarStyle('light-content')
   StatusBar.setBackgroundColor(background)
 

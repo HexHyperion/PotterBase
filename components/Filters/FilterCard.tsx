@@ -7,13 +7,14 @@ import { useContext } from "react"
 import { ThemeContext } from "@/components/ThemeContext"
 import { toDropdownFormat, getFilterableFields } from "./FilterFunctions"
 import filterStyles from "./FilterStyles"
-import { FetchedData, FilterCardProps } from "@/constants/Types"
+import { FilterCardProps } from "@/constants/Types"
 import images from "@/constants/Images"
 
 
+// One card containing the information about filter parameters
+// User can add many of them and delete each card separately
 export default function FilterCard({data, filter, onChange, onDelete}: FilterCardProps) {
   const theme = useContext(ThemeContext).theme
-  const lighterBackground = themes[theme].lighterBackground
   const lightBackground = themes[theme].lightBackground
   const background = themes[theme].background
 

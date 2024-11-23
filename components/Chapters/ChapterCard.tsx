@@ -1,21 +1,16 @@
-import { filters } from "@/constants/Filters"
-import { View, TextInput, Image, TouchableOpacity, Text } from "react-native"
-import { Dropdown } from "react-native-element-dropdown"
+import { View, Text } from "react-native"
 import detailStyles from "@/components/Details/DetailStyles"
 import { themes } from "@/constants/Themes"
 import { useContext } from "react"
 import { ThemeContext } from "@/components/ThemeContext"
-import { Chapter, FetchedData } from "@/constants/Types"
-import images from "@/constants/Images"
+import { Chapter } from "@/constants/Types"
 import filterStyles from "@/components/Filters/FilterStyles"
 
 
 // Card displaying one chapter's title and summary (as if they existed beyond the first book... :/ )
 export default function ChapterCard({chapter}: {chapter: Chapter}) {
   const theme = useContext(ThemeContext).theme
-  const lighterBackground = themes[theme].lighterBackground
   const lightBackground = themes[theme].lightBackground
-  const background = themes[theme].background
 
   return (
     <View style={[detailStyles.card, {backgroundColor: lightBackground}]}>

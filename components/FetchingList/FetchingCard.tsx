@@ -1,9 +1,5 @@
 import { PotterObject } from "@/constants/Types"
-import { View, Text, Image } from "react-native"
-import LinearGradient from "react-native-linear-gradient"
-import { getImage, extractColors } from "@/components/Details/DetailFunctions"
-import DetailList from "@/components/Details/DetailList"
-import Space from "@/components/Space"
+import { View, Text } from "react-native"
 import fetchStyles from "./FetchStyles"
 import FetchingCardTemplate from "./FetchingCardTemplate"
 

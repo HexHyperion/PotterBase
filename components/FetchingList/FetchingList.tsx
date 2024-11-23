@@ -1,9 +1,7 @@
-import { FlatList, Text, View, TouchableHighlight, TouchableOpacity, Image, TextInput } from "react-native"
+import { FlatList, Text, View, TouchableOpacity, Image, TextInput } from "react-native"
 import { useContext, useEffect, useState } from "react"
-import { Category, defaultQueryData, FetchedData, FilterData, HeaderPropName, Link, NestedNavigationParams, Path, PotterObject, QueryData } from "@/constants/Types"
-import { createStackNavigator } from "@react-navigation/stack"
+import { defaultQueryData, FetchedData, FilterData, HeaderPropName, Link, NestedNavigationParams, Path, PotterObject } from "@/constants/Types"
 import { useRoute } from "@react-navigation/native"
-import { Theme } from "@/constants/Types"
 import { themes } from "@/constants/Themes"
 import { ThemeContext } from "@/components/ThemeContext"
 import { Double } from "react-native/Libraries/Types/CodegenTypes"
@@ -44,7 +42,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
     // Fetches the data from the PotterDB API (or pretty much any other REST API)
     const fetchData = async () => {
       const url = endpoint + path + queries[keyPath].queryPage + queries[keyPath].querySearch + queries[keyPath].queryFilters
-      console.log(`Fetching for ${url}`);
+      console.log(`Fetching for ${url}`)
 
       try {
         setLoading(true)

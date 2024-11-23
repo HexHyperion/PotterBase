@@ -4,7 +4,7 @@ import { ThemeContext } from "@/components/ThemeContext"
 import { themes } from "@/constants/Themes"
 import { FetchedData, FilterData } from "@/constants/Types"
 import { useContext, useEffect, useState } from "react"
-import { ScrollView, View, Button, TouchableOpacity, Text, Image } from "react-native"
+import { ScrollView, View, TouchableOpacity, Text, Image } from "react-native"
 import FilterCard from "@/components/Filters/FilterCard"
 import images from "@/constants/Images"
 

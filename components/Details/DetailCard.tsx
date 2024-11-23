@@ -20,7 +20,6 @@ export function DetailCard({object, labelsInline, labelsInside, labelsOutside, c
   const theme = useContext(ThemeContext).theme
   const lightBackground = themes[theme].lightBackground
   const background = themes[theme].background
-  const darkBackground = themes[theme].darkBackground
 
   return (
     <ScrollView style={detailStyles.wrapper}>
