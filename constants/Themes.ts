@@ -23,7 +23,7 @@ export const themes = {
     color: "#ffffff",
     lighterBackground: "#151515",
     lightBackground: "#0f0f0f",
-    background: "#080808",
+    background: "#000000",
     darkBackground: "#000000",
     gradient: []
   },
