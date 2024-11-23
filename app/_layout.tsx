@@ -26,10 +26,9 @@ export default function RootStack() {
 
   const [theme, setTheme] = useState<Theme>("neutral")    // CHANGE IT LATER TO USE ASYNCMEMORY!!!
   const value = {theme, setTheme}
-  const accentColor = themes[theme].color
+  const color = themes[theme].color
   const background = themes[theme].background
   const darkBackground = themes[theme].darkBackground
-  const accent = themes[theme].accent
 
   navColor(background)
 
@@ -53,7 +52,7 @@ export default function RootStack() {
       }}>
 
         <Tab.Screen name="Home" component={Home} options={{
-          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Home"),
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, color, "Home"),
           tabBarIcon: ({size, focused}) => {
             size *= 1.2
             return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme, "home")}/>
@@ -61,7 +60,7 @@ export default function RootStack() {
         }}/>
 
         <Tab.Screen name="Books" component={Books} options={{
-          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Books"),
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, color, "Books"),
           tabBarIcon: ({size, focused}) => {
             size *= 1.1
             return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme, "books")}/>
@@ -69,7 +68,7 @@ export default function RootStack() {
         }}/>
 
         <Tab.Screen name="Movies" component={Movies} options={{
-          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Movies"),
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, color, "Movies"),
           tabBarIcon: ({size, focused}) => {
             size *= 1.1
             return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme, "movies")}/>
@@ -77,7 +76,7 @@ export default function RootStack() {
         }}/>
 
         <Tab.Screen name="Characters" component={Characters} options={{
-          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Characters"),
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, color, "Characters"),
           tabBarIcon: ({size, focused}) => {
             size *= 1.1
             return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme, "characters")}/>
@@ -85,7 +84,7 @@ export default function RootStack() {
         }}/>
 
         <Tab.Screen name="Potions" component={Potions} options={{
-          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Potions"),
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, color, "Potions"),
           tabBarIcon: ({size, focused}) => {
             size *= 1.1
             return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme, "potions")}/>
@@ -93,7 +92,7 @@ export default function RootStack() {
         }}/>
 
         <Tab.Screen name="Spells" component={Spells} options={{
-          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, accentColor, "Spells"),
+          tabBarLabel: ({focused}) => SetNavLabelStyle(focused, color, "Spells"),
           tabBarIcon: ({size, focused}) => {
             size *= 1.1
             return <Image style={{width: size, height: size}} source={SelectNavImage(focused, theme, "spells")}/>

@@ -1,6 +1,24 @@
 export type Theme = "neutral" | "gryffindor" | "slytherin" | "ravenclaw" | "hufflepuff" | "disabled"
 
 export type Category = "Books" | "Movies" | "Characters" | "Potions" | "Spells"
+export type Path = "books" | "chapters" | "movies" | "characters" | "potions" | "spells"
+
+export type QueryData = {
+  currentFilters: FilterData[];
+  currentQuery: string;
+  queryPage: string;
+  querySearch: string;
+  queryFilters: string;
+}
+
+export const defaultQueryData: QueryData = {
+  currentFilters: [],
+  currentQuery: "",
+  queryPage: "?page[number]=1",
+  querySearch: "",
+  queryFilters: "",
+}
+
 
 export type Link = "current" | "first" | "prev" | "next" | "last"
 

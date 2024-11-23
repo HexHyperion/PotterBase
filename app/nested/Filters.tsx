@@ -1,4 +1,3 @@
-import { getFilterableFields, toDropdownFormat } from "@/components/Filters/FilterFunctions"
 import detailStyles from "@/components/Details/DetailStyles"
 import filterStyles from "@/components/Filters/FilterStyles"
 import { ThemeContext } from "@/components/ThemeContext"
@@ -13,25 +12,32 @@ import images from "@/constants/Images"
 // The whole filter menu with the ability to add multiple filters
 export default function Filters({navigation, route}: {navigation: any, route: any}) {
   const data: FetchedData = route.params.data
-  const path: string = route.params.path
+  const currentFilters: FilterData[] = route.params.filters as FilterData[]
 
   const updateFilters = route.params.updateFilters      // The callback passed from the FetchingList
   const [filters, setFilters] = useState<FilterData[]>([])
-  const [loading, setLoading] = useState(true)
 
   const theme = useContext(ThemeContext).theme
   const background = themes[theme].background
   const lightBackground = themes[theme].lightBackground
-  const lighterBackground = themes[theme].lighterBackground
 
 
   // Appends a new filter card to the list
   const addNewFilter = () => {
-    setFilters((prevFilters) => [...prevFilters, { property: undefined, condition: undefined, value: undefined}])
+    setFilters((prevFilters) => [...prevFilters, {property: undefined, condition: undefined, value: undefined}])
   }
 
   // Adds one card on the page load so the user doesn't have to create it manually
-  useEffect(addNewFilter, [])
+  useEffect(() => {
+    if (currentFilters && currentFilters.length > 0) {
+      currentFilters.forEach((currentFilter) => {
+        setFilters((prevFilters) => [...prevFilters, {property: currentFilter.property, condition: currentFilter.condition, value: currentFilter.value}])
+      })
+    }
+    else {
+      addNewFilter()
+    }
+  }, [])
 
 
   // Updates the filter list at the index that was changed
@@ -70,7 +76,7 @@ export default function Filters({navigation, route}: {navigation: any, route: an
       }
     })
 
-    updateFilters(queryString)
+    updateFilters(filters, queryString)
     navigation.goBack()
   }
 

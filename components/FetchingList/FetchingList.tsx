@@ -1,6 +1,6 @@
 import { FlatList, Text, View, TouchableHighlight, TouchableOpacity, Image, TextInput } from "react-native"
 import { useContext, useEffect, useState } from "react"
-import { Category, FetchedData, HeaderPropName, Link, NestedNavigationParams, PotterObject } from "@/constants/Types"
+import { Category, defaultQueryData, FetchedData, FilterData, HeaderPropName, Link, NestedNavigationParams, Path, PotterObject, QueryData } from "@/constants/Types"
 import { createStackNavigator } from "@react-navigation/stack"
 import { useRoute } from "@react-navigation/native"
 import { Theme } from "@/constants/Types"
@@ -12,10 +12,13 @@ import FetchingCard from "./FetchingCard"
 import images from "@/constants/Images"
 
 const endpoint = "https://api.potterdb.com/v1/"
-let currentQuery = ""
-let queryPage = "?page[number]=1"
-let querySearch = ""
-let queryFilters = ""
+
+const queryKeys = ["books", "chapters", "movies", "characters", "potions", "spells"]
+
+// A kind of a last-minute genius fix for queries and filters affecting other instances of the FetchingList
+// Basically every category gets its own object containing all query parameters (page, search and filters)
+// And TIL about a lot of cool Object methods that can't be used in webdev because Internet Explorer :/
+const queries = Object.fromEntries(queryKeys.map(key => [key, {...defaultQueryData}]))
 
 
 // The list responsible for displaying the fetched data
@@ -24,7 +27,6 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
   const theme = useContext(ThemeContext).theme
   const route = useRoute()
-  const accent = themes[theme].accent
   const color = themes[theme].color
   const background = themes[theme].background
   const lightBackground = themes[theme].lightBackground
@@ -32,6 +34,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
   try {
     const path = (route.params as NestedNavigationParams).path
+    const keyPath = path as Path
 
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<FetchedData>({} as FetchedData)
@@ -39,10 +42,10 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
 
     // Fetches the data from the PotterDB API (or pretty much any other REST API)
-    // If an empty string is passed, returns without sending any requests
     const fetchData = async () => {
-      const url = endpoint + path + queryPage + querySearch + queryFilters
-      if (url.trim() == "") return
+      const url = endpoint + path + queries[keyPath].queryPage + queries[keyPath].querySearch + queries[keyPath].queryFilters
+      console.log(`Fetching for ${url}`);
+
       try {
         setLoading(true)
         const response = await fetch(url)
@@ -66,11 +69,13 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
     // Resets everything on component load
     // Prevents passing the query to other tabs/categories
+    // Well, turns out it doesn't, but still better to be safe
     useEffect(() => {
-      currentQuery = ""
-      querySearch = ""
-      queryFilters = ""
-      queryPage = "?page[number]=1"
+      queries[keyPath].currentQuery = ""
+      queries[keyPath].querySearch = ""
+      queries[keyPath].queryFilters = ""
+      queries[keyPath].queryPage = "?page[number]=1"
+      queries[keyPath].currentFilters = []
       fetchData()
     }, [])
 
@@ -80,7 +85,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
       // Called on card press, navigates to each element's detail page
       const handlePress = () => {
-        navigation.navigate("Details", { object: item })
+        navigation.navigate("Details", {object: item})
       }
 
       return (
@@ -95,10 +100,9 @@ export default function FetchingList({navigation}: {navigation: any}) {
     // ================================ EVENT HANDLERS ==================================
 
     // Changes the FetchingList data source to the first, last, previous or next page
-    // If the link is nonexistent passes an empty string, causing fetchData() to return without sending a new request
     const handlePage = (link: Link) => {
       if (data.links[link]) {
-        queryPage = `?page[number]=${data.meta.pagination[link]}`
+        queries[keyPath].queryPage = `?page[number]=${data.meta.pagination[link]}`
         fetchData()
       }
     }
@@ -109,7 +113,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
     // Both functions cause a new request to the API
     const handleExactPage = ({nativeEvent: {text}}: {nativeEvent: {text: any}}) => {
       if ((data.meta.pagination.first ?? 1) < text && text < (data.meta.pagination.last ?? data.meta.pagination.current)) {
-        queryPage = `?page[number]=${text}`
+        queries[keyPath].queryPage = `?page[number]=${text}`
         fetchData()
       }
       else {
@@ -122,7 +126,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
     // TIL about encodeURIComponent so spaces and special symbols can be entered as well
     const handleSearch = ({nativeEvent: {text}}: {nativeEvent: {text: string}}) => {
       try {
-        currentQuery = text
+        queries[keyPath].currentQuery = text
         let searchedType: HeaderPropName
         if (data.data) {
           if (["book", "movie"].includes(data.data[0].type)) {
@@ -132,8 +136,8 @@ export default function FetchingList({navigation}: {navigation: any}) {
             searchedType = "name"
           }
 
-          querySearch = `&filter[${searchedType}_cont]=${encodeURIComponent(text)}`
-          queryPage = `?page[number]=1`
+          queries[keyPath].querySearch = `&filter[${searchedType}_cont]=${encodeURIComponent(text)}`
+          queries[keyPath].queryPage = `?page[number]=1`
           fetchData()
         }
       }
@@ -148,17 +152,20 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
     // Just resets everything
     const handleReset = () => {
-      currentQuery = ""
-      queryPage = `?page[number]=1`
-      querySearch = ""
-      queryFilters = ""
+      queries[keyPath].currentQuery = ""
+      queries[keyPath].queryPage = "?page[number]=1"
+      queries[keyPath].querySearch = ""
+      queries[keyPath].queryFilters = ""
+      queries[keyPath].currentFilters = []
       fetchData()
     }
 
     // Callback passed to the filter menu
     // Sets the filters once the user returns
-    const updateFilters = (newFilters: string) => {
-      queryFilters = newFilters
+    const updateFilters = (newFiltersMemory: FilterData[], newFilters: string) => {
+      queries[keyPath].queryFilters = newFilters
+      queries[keyPath].currentFilters = newFiltersMemory
+      queries[keyPath].queryPage = "?page[number]=1"
       fetchData()
     }
 
@@ -179,7 +186,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
               <TextInput
                 style={fetchStyles.input}
                 returnKeyType="search"
-                defaultValue={currentQuery}
+                defaultValue={queries[keyPath].currentQuery}
                 onSubmitEditing={handleSearch}
                 placeholderTextColor="#ffffff6a"
                 placeholder={isDataEmpty ? "" : `Search for ${data.data[0].type}s`}   // Check if data exists, prevents reading undefined
@@ -187,13 +194,13 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
               {/* Clear all filters */}
               <TouchableOpacity
-                disabled={(querySearch == "" && queryFilters == "")}   // Disable only if the query is clear
+                disabled={(queries[keyPath].querySearch == "" && queries[keyPath].queryFilters == "")}   // Disable only if the query is clear
                 style={fetchStyles.inputGroupButton}
                 activeOpacity={0.85}
                 onPress={handleReset}>
                 <Image
                   style={{height: 15, width: 15}}
-                  source={(querySearch == "" && queryFilters == "")    // No icon if inactive
+                  source={(queries[keyPath].querySearch == "" && queries[keyPath].queryFilters == "")    // No icon if inactive
                     ? require("@/assets/images/transparent.png")
                     : images.neutral.buttons.wands}
                 />
@@ -202,15 +209,15 @@ export default function FetchingList({navigation}: {navigation: any}) {
 
             {/* Filter menu */}
             <TouchableOpacity
-              style={[fetchStyles.inputFilter, {backgroundColor: queryFilters != "" ? color : lightBackground}]}    // Highlighted if active, background color if not
+              style={[fetchStyles.inputFilter, {backgroundColor: queries[keyPath].queryFilters != "" ? color : lightBackground}]}    // Highlighted if active, background color if not
               activeOpacity={0.75}
               onPress={() => {
-                queryFilters = ""
-                navigation.navigate("Filters", {data: ((data.data && data.data.length > 0) ? data : fallbackData), updateFilters: updateFilters, path: path})
+                queries[keyPath].queryFilters = ""
+                navigation.navigate("Filters", {data: ((data.data && data.data.length > 0) ? data : fallbackData), updateFilters: updateFilters, path: path, filters: queries[keyPath].currentFilters})
               }}>
               <Image
                 style={{height: 25, width: 25}}
-                source={(theme == "neutral" && !(queryFilters == ""))     // If the highlight is active and white dim the icon (otherwise it would blend)
+                source={(theme == "neutral" && !(queries[keyPath].queryFilters == ""))     // If the highlight is active and white dim the icon (otherwise it would blend)
                   ? images.disabled.buttons.sorting
                   : images.neutral.buttons.sorting}
               />
@@ -284,7 +291,7 @@ export default function FetchingList({navigation}: {navigation: any}) {
         {loading && (
           // Waiting for the fetching to end
           <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: darkBackground}}>
-            <Text style={{color: "white"}}>Loading...</Text>
+            <Text style={fetchStyles.text}>Loading...</Text>
           </View>
         )}
 
@@ -320,8 +327,8 @@ export default function FetchingList({navigation}: {navigation: any}) {
     return (
       // And a failsafe so it doesn't kill itself
       <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-        <Text style={{color: "white", textAlign: "center"}}>Something went wrong during loading the list!</Text>
-        <Text style={{color: "white", textAlign: "center"}}>Application returned {`${err}`}</Text>
+        <Text style={[fetchStyles.text, {textAlign: "center"}]}>Something went wrong during loading the list!</Text>
+        <Text style={[fetchStyles.text, {textAlign: "center"}]}>Application returned {`${err}`}</Text>
       </View>
     )
   }

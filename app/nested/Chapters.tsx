@@ -9,6 +9,7 @@ import { ScrollView, View, Button, TouchableOpacity, Text, Image } from "react-n
 import FilterCard from "@/components/Filters/FilterCard"
 import images from "@/constants/Images"
 import ChapterCard from "@/components/Chapters/ChapterCard"
+import fetchStyles from "@/components/FetchingList/FetchStyles"
 
 const endpoint = "https://api.potterdb.com/v1/"
 
@@ -21,11 +22,14 @@ export default function Chapters({navigation, route}: {navigation: any, route: a
   const [chapters, setChapters] = useState<FetchedData>({} as FetchedData)
 
   const theme = useContext(ThemeContext).theme
+  const darkBackground = themes[theme].darkBackground
   const background = themes[theme].background
   const lightBackground = themes[theme].lightBackground
   const lighterBackground = themes[theme].lighterBackground
 
 
+  // The exact same fetchData from the FetchingList, but without the no data fallback
+  // Unless a new book is written, there's no risk of undefined
   const fetchData = async () => {
     const url = endpoint + `/books/${book}/chapters/`
     try {
@@ -45,18 +49,29 @@ export default function Chapters({navigation, route}: {navigation: any, route: a
   useEffect(() => {fetchData()}, [])
 
   return (
-    <ScrollView style={detailStyles.wrapper}>
-      <View style={[detailStyles.cardWrapper, {gap: 10}]}>
+    <>
+      {loading && (
+        // Waiting for the fetching to end
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: darkBackground}}>
+          <Text style={fetchStyles.text}>Loading...</Text>
+        </View>
+      )}
 
-        {/* doesn't work */}
-        {chapters.data.map((chapter, index) => (
-          <ChapterCard
-            key={index}
-            chapter={chapter as Chapter}
-          />
-        ))}
+      {!loading && (
+        <ScrollView style={detailStyles.wrapper}>
+          <View style={[detailStyles.cardWrapper, {gap: 10}]}>
 
-      </View>
-    </ScrollView>
+            {/* Add all chapters one by one */}
+            {chapters.data.map((chapter, index) => (
+              <ChapterCard
+                key={index}
+                chapter={chapter as Chapter}
+              />
+            ))}
+
+          </View>
+        </ScrollView>
+      )}
+    </>
   )
 }
